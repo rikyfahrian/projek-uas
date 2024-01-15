@@ -1,75 +1,121 @@
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../kelompok/css/bootstrap.min.css" rel="stylesheet" />
+<!doctype html>
+<html lang="en">
 
-    <title>Login Page</title>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="../kelompok/css/bootstrap.min.css" rel="stylesheet">
 
- <style>
-    .custom-mt {
-        margin-top: 130px;
+  <style>
+    .gradient-custom-2 {
+      /* fallback for old browsers */
+      background: #808080;
+      /* Warna abu-abu yang diinginkan */
+
+      /* Fallback jika warna abu-abu di atas tidak didukung */
+      background: linear-gradient(to right, #808080, #808080);
+
     }
 
-    .custom-w {
-        width: 65vh;
+    @media (min-width: 10px) {
+      .gradient-form {
+        height: 50vh;
+      }
     }
 
-    .form-control:focus {
-        border-color: #ffc107; 
-        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25); 
+    @media (min-width: 10px) {
+      .gradient-custom-2 {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+      }
     }
-
-    .bg-custom {
-        position: relative;
-        background-image: url('../image/bg-image2.jpg');
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-       
-    }
-
-    .overlay {
-        position: absolute;
-      
-        width: 100%;
-        height: 100%; /* Memastikan tinggi overlay mencakup tinggi gambar latar belakang */
-        background-color: rgba(0, 0, 0, 0.6); 
-    }
- </style>
-
+  </style>
 </head>
-<body class="bg-custom">
-    <div class="overlay">
-    <div class="container d-flex justify-content-center align-content-center custom-mt">
-        <div class="card text-bg-dark mb-3 custom-w">
-            <div class="card-header ">Header</div>
-            <div class="card-body">
-                <form action="aksilogin.php" method="post">
-                    <div class="mb-3 w-auto">
-                        <label for="username" class="form-label">Username </label>
-                        <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
-                        
-                    </div>
-                    <div class="mb-4 w-auto">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password">
-                    </div>
-                    
 
-                    <div class="d-grid gap-2">
-                       
-                        <button class="btn btn-warning mb-2" type="submit">Login</button>
-                        <div id="emailHelp" class="form-text mx-2">Belum Memili akun ? daftar terlebih dahulu</div>
-                        <a href="register.php" ><button type="button" class="btn btn-dark">Daftar</button></a>
+<body class="bg-dark">
+  <section class="gradient-form" style="background-color: #eee;">
+ 
+    <div class="container justify-content-center align-content-center  d-flex ">
+
+    <?php
+                  if (isset($_GET['pesan'])) {
+                    if ($_GET['pesan'] == "gagallogin") {
+                      echo '<div class="alert alert-danger position-absolute z-3 mt-3 " role="alert" >
+                      password atau username tidak sesuai
+                    </div>';
+                 } else if ($_GET['pesan'] == "logout") {
+                      echo '<div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+                      <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                        <div>
+                          <p class="font-bold">Telah Berhasil Log Out</p>
+                          <p class="text-sm">Aktivitas akan terekam sistem.</p>
+                        </div>
+                      </div>
+                    </div>';
+                    }
+                  }
+                  ?>
+      <div class="row d-flex justify-content-center align-items-center ">
+      
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black mt-5">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+
+                  <div class="text-center">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp" style="width: 185px;" alt="logo">
+                    <h4 class="mt-1 mb-4 ">We are warif teams</h4>
+                  </div>
+
+                 
+
+                  <form method="post" action="aksilogin.php">
+                    <p>Please login to your account</p>
+
+                    <div class="form-outline mb-4">
+                      <input type="text" name="username" class="form-control" placeholder="masukan username" required />
+                      <label class="form-label" for="form2Example11">Username</label>
                     </div>
-                </form>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" name="password" class="form-control" required />
+                      <label class="form-label" for="form2Example22">Password</label>
+                    </div>
+
+                    <div class="text-center pt-1  pb-1">
+                      <button class="btn btn-info  btn-block fa-lg mb-3" type="submit">Log
+                        in</button>
+                      <a class="text-muted" href="#!">Forgot password?</a>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center ">
+                      <p class="mb-0 me-2">Belum Punya Akun ?</p>
+                      <button type="button" class="btn btn-warning ">Create new</button>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <h4 class="mb-4">We are more than just a company</h4>
+                  <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <script src="kelompok/js/bootstrap.bundle.min.js"></script>
+  </section>
+
+  <script src="../kelompok/js/bootstrap.min.js"></script>
 </body>
+
 </html>

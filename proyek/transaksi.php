@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
   <head>
+
     <!--script untuk mengatur dark/light mode-->
     <script src="../kelompok/js/color-modes.js"></script>
 
@@ -75,8 +76,8 @@
         height: 225px;
       }
 
-      .bg-card-header {
-        background-color: #5f9ea0;
+      .bg-card-header{
+        background-color: #5F9EA0;
       }
 
       /* style untuk side bar dan nav bar */
@@ -168,6 +169,7 @@
     />
 
     <link href="../kelompok/css/dashboard.css" rel="stylesheet" />
+   
   </head>
 
   <body class="bg-dark-subtle">
@@ -200,7 +202,7 @@
       class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle"
     >
       <button
-        class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+        class="btn btn-bd-primary  py-2 dropdown-toggle d-flex align-items-center"
         id="bd-theme"
         type="button"
         aria-expanded="false"
@@ -359,13 +361,19 @@
     <!--navbar nya-->
     <header
       class="navbar border-bottom border-dark-subtle sticky-top bg-dark-subtle flex-md-nowrap p-0 shadow"
+      
     >
+    
+ 
+      
       <a
         class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 me-0 px-3 fs-6 text-info-emphasis"
         href="http://localhost/uas/proyek/landingpage.php#"
         >WARIF CORPORATION
+       
       </a>
-
+      
+      
       <ul class="navbar-nav flex-row d-md-none">
         <li class="nav-item text-nowrap">
           <button
@@ -381,8 +389,15 @@
           </button>
         </li>
       </ul>
+
+
+  
+ 
+
     </header>
 
+   
+      
     <!--sidebar-->
     <div class="container-fluid">
       <div class="row">
@@ -396,7 +411,9 @@
             aria-labelledby="sidebarMenuLabel"
           >
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="sidebarMenuLabel">warif</h5>
+              <h5 class="offcanvas-title" id="sidebarMenuLabel">
+                warif 
+              </h5>
               <button
                 type="button"
                 class="btn-close"
@@ -408,12 +425,13 @@
             <div
               class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto"
             >
-              <h6
-                class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-body-secondary text-uppercase"
-              >
-                <span>Menu Utama</span>
-              </h6>
-
+            <h6
+            class="sidebar-heading d-flex justify-content-between align-items-center px-3  mb-1 text-body-secondary text-uppercase"
+          >
+            <span>Menu Utama</span>
+           
+          </h6>
+            
               <ul class="nav flex-column">
                 <li class="nav-item">
                   <a
@@ -426,7 +444,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <a class="nav-link d-flex align-items-center gap-2" href="tableunit.php">
                     <svg class="bi"><use xlink:href="#file-earmark" /></svg>
                     Table Unit
                   </a>
@@ -440,7 +458,7 @@
                 <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" href="#">
                     <svg class="bi"><use xlink:href="#people" /></svg>
-                    Transaksi
+                  Transaksi
                   </a>
                 </li>
                 <li class="nav-item">
@@ -455,31 +473,20 @@
                 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase"
               >
                 <span>Keuangan</span>
+               
               </h6>
               <ul class="nav flex-column mb-auto">
                 <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      class="bi"
-                      width="16"
-                      height="16"
-                    >
-                      <path
-                        d="M10.75 9a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5h-1.5Z"
-                      ></path>
-                      <path
-                        d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25ZM14.5 6.5h-13v5.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Zm0-2.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25V5h13Z"
-                      ></path>
-                    </svg>
+                  <a class="nav-link d-flex align-items-center gap-2" href="saldo.php">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi" width="16" height="16"><path d="M10.75 9a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5h-1.5Z"></path><path d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25ZM14.5 6.5h-13v5.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Zm0-2.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25V5h13Z"></path></svg>
                     Saldo
                   </a>
                 </li>
               </ul>
-              <hr class="my-3" />
+              <hr class="my-3"/>
 
               <ul class="nav flex-column mb-auto">
+               
                 <li class="nav-item">
                   <a class="nav-link d-flex align-items-center gap-2" href="#">
                     <svg class="bi">
@@ -494,6 +501,7 @@
                     Sign out
                   </a>
                 </li>
+               
               </ul>
             </div>
           </div>
@@ -501,131 +509,20 @@
 
         <!--conten utama-->
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <!--pilihan tabs-->
-          <div class="container-fluid col-md-11 mb-4 mt-4">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="saldo.php"
-                  >Pembuatan Saldo</a
-                >
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="atursaldo.html"
-                  >Informasi dan Pengaturan Saldo</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <div class="container col-md-11">
-            <div class="card">
-              <div class="card-header bg-success">
-                Informasi Kepemilikan Saldo
-              </div>
-              <div class="card-body">
-                <input
-                  class="form-control mb-4"
-                  type="text"
-                  placeholder="nama_lengkap"
-                  aria-label="Disabled input example"
-                  id="nama_lengkap"
-                  disabled
-                />
-                <input
-                  class="form-control mb-4"
-                  type="text"
-                  id="perusahaan"
-                  placeholder="Nama Perusahaan"
-                  aria-label="Disabled input example"
-                  disabled
-                  readonly
-                />
-                <input
-                  class="form-control mb-4"
-                  id="rekening"
-                  type="text"
-                  placeholder="Nama Rekening"
-                  aria-label="Disabled input example"
-                  disabled
-                />
-                <input
-                  class="form-control mb-4"
-                  type="date"
-                  id="tanggal_buat"
-                  value="Disabled readonly input"
-                  aria-label="Disabled input example"
-                  disabled
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="container col-md-11 mt-5 mb-5">
-            <div class="card">
-              <div class="card-header bg-secondary">Ubah Informasi Saldo</div>
-              <div class="card-body">
-                <form class="row g-3">
-                  <div class="col-md-6">
-                    <label for="nama_lengkap" class="form-label"
-                      >Nama Lengkap</label
-                    >
-                    <input type="text" class="form-control" id="nama_lengkap" />
-                  </div>
-                  <div class="col-md-6">
-                    <label for="perusahaan" class="form-label"
-                      >Nama Perusahaan</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="perusahaan"
-                    />
-                  </div>
-                  <div class="col-12">
-                    <label for="alamat" class="form-label">Alamat</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="alamat"
-                      placeholder="1234 Main St"
-                    />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="rekening" class="form-label"
-                      >Nama Rekening</label
-                    >
-                    <input type="text" class="form-control" id="rekening" />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="inputZip" class="form-label">No Rekening</label>
-                    <input type="text" class="form-control" id="inputZip" />
-                  </div>
-                 
-                  </div>
-                  <div class="container-fluid mb-4 mx-1">
-                  <div class="col-12">
-                    <button type="submit" class="btn btn-info btn-md">Update Informasi </button>
-                  </div>
-                </div>
-                </form>
-              </div>
-            </div>
-          </div>
+       
         </main>
       </div>
     </div>
-    <!--script lokal bawaaan bootsrap-->
-    <script src="../kelompok/js/bootstrap.bundle.min.js"></script>
-    <!--script khusus side dan navbar -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
-      integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../kelompok/js/dashboard.js"></script>
+      <!--script lokal bawaaan bootsrap-->
+      <script src="../kelompok/js/bootstrap.bundle.min.js"></script>
+     <!--script khusus side dan navbar -->
+     <script
+     src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
+     integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
+     crossorigin="anonymous"
+   ></script>
+   <script src="../kelompok/js/dashboard.js"></script>
   </body>
 </html>
+
+   

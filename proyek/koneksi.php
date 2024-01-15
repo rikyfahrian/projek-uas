@@ -1,8 +1,8 @@
 <?php
 
-$koneksi = mysqli_connect("localhost","root","","uas");
+$koneksi = mysqli_connect("localhost","root","","warif");
 
 if (mysqli_connect_errno()){
-    echo "gagal koneksi ke database aplikasi:".mysqli_connect_error();
+    echo "gagal koneksi ke database warif:".mysqli_connect_error();
 }
 ?>

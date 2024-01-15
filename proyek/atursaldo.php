@@ -1,19 +1,3 @@
-<?php
-include 'koneksi.php';
-
-$id_saldo = ''; // Set the default email value
-$user_has_saldo = false; // Flag to check if the user has saldo
-
-// Check if the user is logged in or get the user's email from the session, assuming you have a way to identify users
-if (isset($_SESSION['id_saldo'])) {
-  $email = $_SESSION['id_saldo'];
-
-  // Check if the user already has a record in the database
-  $result = mysqli_query($koneksi, "SELECT * FROM saldo WHERE id_saldo = '$id_saldo'");
-  $user_has_saldo = (mysqli_num_rows($result) > 0);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
 
@@ -80,7 +64,7 @@ if (isset($_SESSION['id_saldo'])) {
     }
 
     .bg-card-header {
-      background-color: #5F9EA0;
+      background-color: #5f9ea0;
     }
 
     /* style untuk side bar dan nav bar */
@@ -169,7 +153,6 @@ if (isset($_SESSION['id_saldo'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
 
   <link href="../kelompok/css/dashboard.css" rel="stylesheet" />
-
 </head>
 
 <body class="bg-dark-subtle">
@@ -191,7 +174,7 @@ if (isset($_SESSION['id_saldo'])) {
   </svg>
 
   <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-    <button class="btn btn-bd-primary  py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
       <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
         <use href="#circle-half"></use>
       </svg>
@@ -285,10 +268,10 @@ if (isset($_SESSION['id_saldo'])) {
   </svg>
 
   <!--navbar nya-->
-
-  <header class="navbar  border-bottom d-flex justify-content-between border-dark-subtle sticky-top bg-dark-subtle flex-md-nowrap p-0 shadow">
+  <header class="navbar border-bottom border-dark-subtle sticky-top bg-dark-subtle flex-md-nowrap p-0 shadow">
     <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 me-0 px-3 fs-6 text-info-emphasis" href="http://localhost/uas/proyek/landingpage.php#">WARIF CORPORATION
     </a>
+
     <?php
     include "koneksi.php";
 
@@ -319,7 +302,6 @@ if (isset($_SESSION['id_saldo'])) {
     }
     ?>
 
-
     <ul class="navbar-nav flex-row d-md-none">
       <li class="nav-item text-nowrap">
         <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -337,18 +319,17 @@ if (isset($_SESSION['id_saldo'])) {
       <div class="sidebar border-end border-dark-subtle border-2 col-md-3 col-lg-2 p-0 bg-body-tertiary">
         <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebarMenuLabel">
-              warif
-            </h5>
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">warif</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3  mb-1 text-body-secondary text-uppercase">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-body-secondary text-uppercase">
               <span>Menu Utama</span>
             </h6>
+
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="landingpage.php">
                   <svg class="bi">
                     <use xlink:href="#house-fill" />
                   </svg>
@@ -388,12 +369,13 @@ if (isset($_SESSION['id_saldo'])) {
                 </a>
               </li>
             </ul>
+
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
               <span>Keuangan</span>
             </h6>
             <ul class="nav flex-column mb-auto">
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="saldo.php">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi" width="16" height="16">
                     <path d="M10.75 9a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5h-1.5Z"></path>
                     <path d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25ZM14.5 6.5h-13v5.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Zm0-2.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25V5h13Z"></path>
@@ -403,6 +385,7 @@ if (isset($_SESSION['id_saldo'])) {
               </li>
             </ul>
             <hr class="my-3" />
+
             <ul class="nav flex-column mb-auto">
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="#">
@@ -435,117 +418,207 @@ if (isset($_SESSION['id_saldo'])) {
             </li>
 
             <li class="nav-item">
-              <a class="nav-link " href="atursaldo.php">Informasi dan Pengaturan Saldo</a>
+              <a class="nav-link" href="atursaldo.html">Informasi dan Pengaturan Saldo</a>
             </li>
           </ul>
         </div>
-        <!--saldo form-->
-        <div class="row">
-          <div class="container col-md-11 mb-4">
-          <!--menampilkan pesan untuk memastikan user sudah memiliki data saldo atau belum-->
-            <div class="d-flex justify-content-center ">
-          <?php
-                // Cek jika ada pesan yang di kirim melalui url dai saldo_aksi.php
-                $message = isset($_GET['message']) ? urldecode($_GET['message']) : '';
+
+        <div class="container col-md-11 mb-5 ">
+          <div class="card">
+            <div class="card-header bg-success">
+              Informasi Kepemilikan Saldo
+            </div>
+            <div class="card-body">
+
+              <div class="row mb-4">
+
+                <!--tampilkan data saldo jika sudah membuat saldo -->
+                <?php
+                include "koneksi.php";
+                $no = 1;
+                $query = mysqli_query($koneksi, "SELECT * FROM saldo order by nama_lengkap asc");
+
+                if (mysqli_num_rows($query) > 0) {
+                  // Jika ada data saldo
+                  while ($d = mysqli_fetch_array($query)) {
                 ?>
-                <!-- Tampilkan pesan yang di kirim url -->
-                <?php if ($message) : ?>
+                    <div class="col">
+                      <label class="mb-2">Nama</label>
+                      <div class="form-outline">
+                        <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control" disabled value="<?php echo $d['nama_lengkap']; ?>" />
+                      </div>
+                    </div>
+
+                    <div class="col mb-4">
+                      <label class="mb-2">Perusahaan</label>
+                      <div class="form-outline">
+                        <input type="text" id="perusahaan" name="perusahaan" class="form-control" disabled value="<?php echo $d['perusahaan']; ?>" />
+                      </div>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <label class="mb-2">Alamat</label>
+                      <input type="text" id="alamat" name="alamat" class="form-control" disabled value="<?php echo $d['alamat']; ?>" />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <label class="mb-2">Email</label>
+                      <input type="email" id="email" name="email" class="form-control" disabled value="<?php echo $d['email']; ?>" />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <label class="mb-2">No Hp</label>
+                      <input type="number" id="no_hp" name="no_hp" class="form-control" disabled value="<?php echo $d['no_hp']; ?>" />
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="form-outline mb-4">
+                      <label class="mb-2">Bank</label>
+                      <input type="text" id="bank" name="bank" class="form-control" disabled value="<?php echo $d['bank']; ?>" />
+                    </div>
+
+                    <div class="form-outline">
+                      <button type="button" class="btn btn-warning btn-sm mb-1" data-bs-toggle="modal" data-bs-target="#tambahUnitModal" value="id_saldo=<?php echo $d['id_saldo']; ?>">
+                        Edit Data Saldo
+                      </button>
+                    </div>
                   <?php
-                  // cek sudah punya saldo atau tidak
-                  $isSuccess = strpos($message, 'successfully') !== false;
-                  $alertClass = $isSuccess ? 'alert-info' : 'alert-danger';
+                  }
+                } else {
+                  // Jika tidak ada data saldo (user belum membuat saldo)
                   ?>
-                  <div class="alert <?php echo $alertClass; ?> alert-dismissible fade show position-fixed z-3 " role="alert">
-                    <?php echo $message; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                <?php endif; ?>
-                </div>
-            <div class="card mb-4">
-              <div class="card-header py-3 border bg-card-header">
-                <h5 class="mb-0 text-dark">Detail Pemilik Saldo</h5>
-              </div>
-              <div class="card-body mt-4">
 
-                <!--form pengisian saldo-->
-                <form method="post" action="saldo_aksi.php">
-                  <div class="row mb-4">
-                    <div class="col">
-                      <div class="form-outline">
-                        <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control" required />
-                        <label class="form-label" for="nama_lengkap">Nama Lengkap</label>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="form-outline">
-                        <input type="text" id="perusahaan" name="perusahaan" class="form-control" required />
-                        <label class="form-label" for="perusahaan">Nama Perusahaan/Lembaga</label>
-                      </div>
+                  <div class="col">
+                    <label class="mb-2">Nama</label>
+                    <div class="form-outline">
+                      <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control" placeholder="Data akan tampil setelah membuat saldo" />
                     </div>
                   </div>
-                  <div class="form-outline mb-4">
-                    <input type="text" id="alamat" name="alamat" class="form-control" required />
-                    <label class="form-label" for="alamat">Alamat</label>
+
+                  <div class="col mb-4">
+                    <label class="mb-2">Perusahaan</label>
+                    <div class="form-outline">
+                      <input type="text" id="perusahaan" name="perusahaan" class="form-control" placeholder="Data akan tampil setelah membuat saldo" />
+                    </div>
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="email" id="email" name="email" class="form-control" required />
-                    <label class="form-label" for="email">Email</label>
+                    <label class="mb-2">Alamat</label>
+                    <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Data akan tampil setelah membuat saldo" />
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="number" id="no_hp" name="no_hp" class="form-control" required />
-                    <label class="form-label" for="no_hp">No Hp</label>
+                    <label class="mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Data akan tampil setelah membuat saldo" />
                   </div>
 
-
-
-                  <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkoutForm2" checked required />
-                    <label class="form-check-label" for="checkoutForm2">
-                      Save this information for next time
-                    </label>
+                  <div class="form-outline mb-4">
+                    <label class="mb-2">No Hp</label>
+                    <input type="number" id="no_hp" name="no_hp" class="form-control" placeholder="Data akan tampil setelah membuat saldo" />
                   </div>
 
                   <hr class="my-4" />
 
-                  <label class="mb-2">Bank</label>
-                  <div class="col-md-5 mb-4">
-                    <select class="form-select" aria-label="Default select example" id="bank" name="bank" required>
-                      <option value="" disabled selected>Pilih Bank</option>
-                      <option value="BCA">BCA</option>
-                      <option value="BRI">BRI</option>
-                      <option value="BSI">BSI</option>
-                    </select>
+                  <div class="form-outline mb-4">
+                    <label class="mb-2">Bank</label>
+                    <input type="text" id="bank" name="bank" class="form-control" placeholder="Data akan tampil setelah membuat saldo" />
                   </div>
-                  <div class="row mb-4">
-                    <div class="col">
-                      <div class="form-outline">
-                        <input type="text" id="rekening" name="rekening" class="form-control" required />
-                        <label class="form-label" for="rekening">Nama Rekening</label>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="form-outline">
-                        <input type="text" id="no_rekening" name="no_rekening" class="form-control" required />
-                        <label class="form-label" for="no_rekening">No Rekening</label>
-                      </div>
-                    </div>
-                  </div>
+                <?php
+                }
+                ?>
+              </div>
 
-                  <div class="row mb-4">
-                    <div class="col-6">
-                      <div class="form-outline">
-                        <input type="number" id="nominal" name="nominal" class="form-control" required />
-                        <label class="form-label" for="nominal">Nominal Yang Ingin Di Masukan</label>
-                      </div>
+              <!-- Modal edit data saldo -->
+              <div class="modal fade" id="tambahUnitModal" tabindex="-1" aria-labelledby="tambahUnitModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header bg-success ">
+                      <h5 class="modal-title" id="tambahUnitModalLabel">Update Data Saldo</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body mt-4">
+
+                      <!-- Form edit data saldo -->
+                      <?php
+                      include "koneksi.php";
+                      $data = mysqli_query($koneksi, "SELECT * from saldo where id_saldo");
+                      while ($d = mysqli_fetch_array($data)) {
+                      ?>
+                        <form method="post" action="saldo_update.php">
+                          <div class="row mb-4">
+
+
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="hidden" name="id_saldo" value="<?php echo $d['id_saldo']; ?>">
+                                <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control" required value="<?php echo $d['nama_lengkap']; ?>" />
+                                <label class="form-label mt-2" for="nama_lengkap">Nama Lengkap</label>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="text" id="perusahaan" name="perusahaan" class="form-control" required value="<?php echo $d['perusahaan']; ?>" />
+                                <label class="form-label mt-2" for="perusahaan">Nama Perusahaan/Lembaga</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-outline mb-4">
+                            <input type="text" id="alamat" name="alamat" class="form-control" required value="<?php echo $d['alamat']; ?>" />
+                            <label class="form-label mt-2" for="alamat">Alamat</label>
+                          </div>
+
+                          <div class="form-outline mb-4">
+                            <input type="email" id="email" name="email" class="form-control" required value="<?php echo $d['email']; ?>" />
+                            <label class="form-label mt-2" for="email">Email</label>
+                          </div>
+
+                          <div class="form-outline mb-4">
+                            <input type="number" id="no_hp" name="no_hp" class="form-control" required value="<?php echo $d['no_hp']; ?>" />
+                            <label class="form-label mt-2" for="no_hp">No Hp</label>
+                          </div>
+
+                          <p class="mb-3 text-danger text-center">Data Di Bawah Ini Bersifat Tetap dan Tidak Dapat Di Ubah</p>
+                          <label class="mb-2">Bank</label>
+                          <div class="form-outline mb-4">
+                            <input type="text" id="bank" name="bank" class="form-control" readonly value="<?php echo $d['bank']; ?>" />         
+                          </div>
+                          <div class="row mb-4">
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="text" id="rekening" name="rekening" class="form-control" readonly value="<?php echo $d['rekening']; ?>" />
+                                <label class="form-label mt-2" for="rekening">Nama Rekening</label>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-outline">
+                                <input type="text" id="no_rekening" name="no_rekening" class="form-control" readonly value="<?php echo $d['no_rekening']; ?>" />
+                                <label class="form-label mt-2" for="no_rekening">No Rekening</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row mb-4">
+                            <div class="col-6">
+                              <div class="form-outline">
+                                <input type="number" id="nominal" name="nominal" class="form-control" readonly value="<?php echo $d['nominal']; ?>" />
+                                <label class="form-label mt-2" for="nominal">Nominal Yang Ingin Di Masukan</label>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                      <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                    </form>
+                  <?php } ?>
                   </div>
-                  <input class="btn btn-info btn-md btn-block" type="submit" value="Buat Saldo">
-                </form>
+                </div>
               </div>
             </div>
           </div>
+        </div>
       </main>
     </div>
   </div>
