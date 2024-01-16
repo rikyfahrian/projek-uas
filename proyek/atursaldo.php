@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="auto">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <!--script untuk mengatur dark/light mode-->
@@ -50,14 +50,7 @@
       background-color: rgba(0, 0, 0, 0.6);
     }
 
-    .chart-alif {
-      width: 110%;
-    }
-
-    .chart-donut {
-      height: 99%;
-      padding: 10px;
-    }
+    
 
     .h-card-4 {
       height: 225px;
