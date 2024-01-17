@@ -1,52 +1,51 @@
-<?php 
+<?php
 include "warifheader.php"
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-<div class="container mt-5 mb-5">
+  <div class="container mt-5 mb-5">
 
 
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  <div class="col">
-    <div class="card" >
-      <img src="https://www.hino.co.id//assets/uploads/products/FM280JD_L_Final-022.png"  style="height: 24rem;" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title ">Hino Ranger 500</h5>
-        <p class="card-text">Truk Yang Suport Untuk Kebutuhan Cargo Antar Kota Di Lenkapi Dengan Mesin Turbo Yang Tangguh</p>
-        <p class="card-text text-info text-md-start fw-semibold ">Spesifikasi </p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://www.hino.co.id//assets/uploads/products/FM340TH_HIRES.png"  style="height: 24rem;" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">FM 350 TH Euro 4</h5>
-        <p class="card-text">Di Lengkapi Dengan Supensi dan Stabil Saat Membawa Beban Dalam Skala Besar</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://www.hino.co.id//assets/uploads/products/FM340PD_(1).png" style="height: 21rem;" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Hino Jumbo 500 Pro</h5>
-        <p class="card-text">Akselerasi Yang Baik Saat Menanjak Dan Handle Rem Yang Baik Saat Menurun</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://www.hino.co.id//assets/uploads/products/d3df6e124ff9491ddbe05b09562dc56c.png" style="height: 21rem;" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">SG 280 TH Euro4</h5>
-        <p class="card-text">Ketangguhan Mesin Untuk Menopang Kebutuhan Cargo Yang Membutuhkan Kecepatan Tinggi</p>
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
 
-</div>
+      <?php
+      include "koneksi.php";
+      $no = 1;
+      $query = mysqli_query($koneksi, "SELECT * FROM truk where id_truk");
+
+      while ($d = mysqli_fetch_array($query)) {
+      ?>
+        <div class="col">
+          <div class="card">
+            <div class="card-header bg-info">
+              <h5 class="card-title text-dark"><?php echo $d['nama_truk']; ?></h5>
+            </div>
+            <?php
+            // Mendapatkan data blob dari database
+            $blobData = $d['foto_truk'];
+            // Mengonversi blob data ke base64
+            $imageData = base64_encode($blobData);
+            // Membuat URL gambar
+            $imageSrc = 'data:image/jpeg;base64,' . $imageData;
+            ?>
+            <img src="<?php echo $imageSrc; ?>" style="height: 21rem;" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text fw-bold mb-1">Deskripsi Singkat</p>
+              <p class="card-text"><?php echo $d['deskripsi']; ?></p>
+              <p class="card-text text-md-start fw-semibold  mb-1">Spesifikasi : <?php echo $d['spek']; ?></p>
+              <p class="card-text  text-md-start fw-semibold  mb-1">Jenis Truk : <?php echo $d['jenis_truk']; ?></p>
+              <p class="card-text  text-md-start fw-semibold  mb-1">Warna : <?php echo $d['warna']; ?></p>
+              <p class="card-text  text-md-start fw-semibold  mb-2">Vendor : <?php echo $d['vendor']; ?></p>
+              <p class="card-text  text-md-start fw-semibold  mb-2">Tahun Produksi : <?php echo $d['tahun_produksi']; ?></p>
+              <p class="card-text text-info   text-lg fw-bold mb-1">Rp.<?php echo number_format($d['harga_truk'], 0, ',', '.'); ?></p>
+            </div>
+            <div class="card-footer d-grid">
+              <button type="button" class="btn btn-info btn-md">Beli Unit</button>
+            </div>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
 
 </main>
