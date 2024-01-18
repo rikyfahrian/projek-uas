@@ -90,7 +90,7 @@ include "warifheader.php";
                                 while ($t = mysqli_fetch_array($query)) {
                                 ?>
                                     <input type="hidden" class="form-control" name="id_truk" value="<?php echo $t['id_truk']; ?>">
-                                    <p class="text-warning fw-semibold" name="harga_truk">Harga Unit : Rp. <?php echo number_format($t['harga_truk'], 0, ',', '.'); ?></p>
+                                    <input class="text-warning fw-semibold border border-0 bg-transparent" name="harga_truk" id="harga_truk" value="RP. <?php echo number_format($t['harga_truk'], 0, ',', '.'); ?>" readonly />
                                 <?php } ?>
                                 <div class="d-grid">
                                     <p class="fw-semibold text-warning" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
@@ -153,10 +153,13 @@ include "warifheader.php";
 </main>
 <script>
     function calculateTotal() {
-        var hargaTruk = parseFloat(document.querySelector("[name='harga_truk']").innerText.replace('Harga Unit : Rp. ', '').replace(/\./g, '').replace(',', ''));
-        var jumlahBeli = parseFloat(document.getElementById("inputState").value);
-        var totalBayar = hargaTruk * jumlahBeli;
+        var hargaTrukValue = document.getElementById('harga_truk').value;
 
+        // var hargaTruk = parseFloat(document.querySelector("[name='harga_truk']").innerText.replace('Harga Unit : Rp. ', '').replace(/\./g, '').replace(',', ''));
+        var numericValue = parseFloat(hargaTrukValue.replace(/[^0-9]/g, ''));
+        var jumlahBeli = parseFloat(document.getElementById("inputState").value);
+        var totalBayar = numericValue * jumlahBeli;
+      
         // Format the totalBayar using Intl.NumberFormat
         var formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',
