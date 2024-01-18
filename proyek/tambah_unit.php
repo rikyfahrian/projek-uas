@@ -41,11 +41,10 @@ include "warifheader.php"
               <p class="card-text text-info   text-lg fw-bold mb-1">Rp.<?php echo number_format($d['harga_truk'], 0, ',', '.'); ?></p>
             </div>
             <div class="card-footer d-grid">
-              <button type="button" class="btn btn-info btn-md">Beli Unit</button>
+            <a href="beli_unit.php?id_truk=<?php echo $d['id_truk']; ?>" class="btn btn-info btn-md">Tambah ke Aset</a>
             </div>
           </div>
         </div>
       <?php } ?>
     </div>
-
 </main>
