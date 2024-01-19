@@ -12,7 +12,7 @@ $no_rekening = $_POST['no_rekening'];
 $nominal = $_POST['nominal'];
 
 // Cek jika user sudah punya data saldo di database
-$result = mysqli_query($koneksi, "SELECT * FROM saldo WHERE email = '$email'");
+$result = mysqli_query($koneksi, "SELECT * FROM saldo WHERE id_saldo");
 if (mysqli_num_rows($result) > 0) {
     // jika sudah punya maka kirim pesan melalui url ke saldo.php
     header("location: saldo.php?message=Anda%20telah%20memiliki%20data%20saldo,%20tidak%20bisa%20membuat%20baru");
