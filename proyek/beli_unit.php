@@ -2,7 +2,38 @@
 include "warifheader.php";
 ?>
 
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     <?php
+        // ...
+
+        // Set pesan default
+        $pesan = '';
+        // Periksa status dari parameter URL
+        if (isset($_GET['status'])) {
+            if ($_GET['status'] === 'success') {
+                echo '
+                <div class="toast-container position-fixed end-0 p-3">
+                  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-info">
+                     
+                      <strong class="me-auto text-dark">WARIF CORPORATION</strong>
+                      <small class="text-dark">Baru Saja</small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                      Hallo, Pembelian Unit Berhasil Silahkan Cek Aktivitas Untuk Melakukan Pembayaran Jika Unit Sudah Di Konfirmasi Di Terima.
+                     
+                    </div>
+                    <button type="button" class="btn btn-info btn-sm mb-2 mx-2">Lihat Aktivitas</button>
+                  </div>
+                </div>';
+            } else {
+                $pesan = 'Terjadi kesalahan dalam proses pembelian.';
+            }
+        }
+
+        ?>
     <div class="container-fluid mt-5 mb-5">
         <div class="row">
             <div class="col-md-6 col-sm-2">
@@ -90,7 +121,9 @@ include "warifheader.php";
                                 while ($t = mysqli_fetch_array($query)) {
                                 ?>
                                     <input type="hidden" class="form-control" name="id_truk" value="<?php echo $t['id_truk']; ?>">
-                                    <input class="text-warning fw-semibold border border-0 bg-transparent" name="harga_truk" id="harga_truk" value="RP. <?php echo number_format($t['harga_truk'], 0, ',', '.'); ?>" readonly />
+
+                                    <input type="hidden" class="text-warning fw-semibold form-control " name="harga_truk" id="harga_truk" value="<?php echo($t['harga_truk']); ?>">
+
                                 <?php } ?>
                                 <div class="d-grid">
                                     <p class="fw-semibold text-warning" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
@@ -108,11 +141,11 @@ include "warifheader.php";
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <h5 class="fw-semibold  ">Anda Yakin Ingin Melakukan Pemblian Unit Ini</h5>
+                                                <h5 class="fw-semibold">Anda Yakin Ingin Melakukan Pemblian Unit Ini</h5>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#yakin">Ya</button>
+                                                <button type="submit" class="btn btn-warning" data-bs-toggle="modal">Ya</button>
                                             </div>
                                         </div>
                                     </div>
@@ -125,26 +158,6 @@ include "warifheader.php";
                 <div class="card mt-2">
                     <div class="card-body">
                         Unit Akan Di Kirim Dan Sampai Ke Gudang Sesuai Waktu Pengiriman, Saldo Akan Otomatis Berkurang Jika Unit Sudah Di Konfirmasi Diterima
-                    </div>
-                </div>
-
-
-                <!-- Info Modal-->
-                <div class="modal fade" id="yakin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-info ">
-                                <h1 class="modal-title fs-5 text-dark " id="exampleModalLabel">Info</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-info">Unit Berhasil Di Beli, Pembayaran Akan Otomatis Setelah Unit Di Konfirmasi Di Terima</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
-                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#yakin">Pergi Ke Aktivitas Beli</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -165,8 +178,13 @@ include "warifheader.php";
             style: 'currency',
             currency: 'IDR',
         });
-
         document.getElementById("totalBayar").innerText = formatter.format(totalBayar);
     }
-</script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastLiveExample = new bootstrap.Toast(document.getElementById('liveToast'), {
+            delay: 5000 
+        });
+        toastLiveExample.show();
+    });
 </script>
