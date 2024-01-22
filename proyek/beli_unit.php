@@ -1,7 +1,14 @@
 <?php
 include "warifheader.php";
 ?>
-
+<style>
+    /*style untuk menampilkan foto truk pada form beli yang di hidden */
+    .image-container {
+        width: 450px; 
+        height: 300px;
+        background-size: cover; 
+    }
+</style>
 
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
     <?php
@@ -87,6 +94,7 @@ include "warifheader.php";
                             <p class="card-text text-md-start fw-semibold  mb-1">Spesifikasi : <?php echo $d['spek']; ?></p>
                             <p class="card-text  text-md-start fw-semibold  mb-1">Warna : <?php echo $d['warna']; ?></p>
                             <p class="card-text  text-md-start fw-semibold  mb-2">Vendor : <?php echo $d['vendor']; ?></p>
+                            <p class="card-text  text-md-start fw-semibold  mb-2">Foto Unit : <?php echo $d['foto_unit']; ?></p>
                             <p class="card-text  text-md-start fw-semibold  mb-2">Tahun Produksi : <?php echo $d['tahun_produksi']; ?></p>
                         </div>
                     </div>
@@ -143,10 +151,22 @@ include "warifheader.php";
 
                                 while ($t = mysqli_fetch_array($query)) {
                                 ?>
-                                    <input type="hidden" class="form-control" name="id_truk" value="<?php echo $t['id_truk']; ?>">
-                                    <input type="text" class="form-control" name="nama_truk" value="<?php echo $t['nama_truk']; ?>">
-                                    <input type="text" class="form-control" name="warna" value="<?php echo $t['warna']; ?>">
+                                    <input type="hidden" name="id_truk" id="idTrukBeli" value="<?php echo $id_truk; ?>">
+                                    <input type="hidden" class="form-control" name="nama_truk" value="<?php echo $t['nama_truk']; ?>">
+                                    <input type="hidden" class="form-control" name="warna" value="<?php echo $t['warna']; ?>">
                                     <input type="hidden" class="text-warning fw-semibold form-control " name="harga_truk" id="harga_truk" value="<?php echo ($t['harga_truk']); ?>">
+                                    <input type="hidden" class="text-warning fw-semibold form-control " name="vendor" value="<?php echo ($t['vendor']); ?>">
+                                    <?php
+                                    // Mendapatkan data blob dari database
+                                    $blobData = $t['foto_truk'];
+                                    // Mengonversi blob data ke base64
+                                    $imageData = base64_encode($blobData);
+                                    // Membuat URL gambar
+                                    $imageSrc = 'data:image/jpeg;base64,' . $imageData;
+                                    ?>
+                                    <div class="image-container visually-hidden" style="background-image: url('<?php echo $imageSrc; ?>');"></div>
+                                    <input type="hidden" value="<?php echo $imageSrc; ?>" name="foto_truk">
+                                    <input type="hidden" class="text-warning fw-semibold form-control " name="tahun_produksi" value="<?php echo ($t['tahun_produksi']); ?>">
                                 <?php } ?>
                                 <div class="d-grid">
                                     <p class="fw-semibold text-warning" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
@@ -202,6 +222,7 @@ include "warifheader.php";
         });
         document.getElementById("totalBayar").innerText = formatter.format(totalBayar);
     }
+
 
     //mengatur toast
     document.addEventListener('DOMContentLoaded', function() {

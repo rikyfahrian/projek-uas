@@ -13,7 +13,9 @@ $total_bayar = floatval($harga_truk) * floatval($jumlah_beli);
 $warna_truk = $_POST['warna'];
 $nama_truk = $_POST['nama_truk'];
 $taanggal_beli = Date('y-m-d');
-
+$vendor = $_POST['vendor'];
+$foto_truk =$_POST['foto_truk'];
+$tahun_produksi =$_POST['tahun_produksi'];
 // Mendapatkan data admin (pembeli) untuk mendapatkan id_admin
 $queryAdmin = mysqli_query($koneksi, "SELECT * FROM admin WHERE email = '$email_pembeli'");
 $dataAdmin = mysqli_fetch_assoc($queryAdmin);
@@ -27,8 +29,8 @@ $dataSaldo = mysqli_fetch_assoc($querySaldo);
 if ($dataSaldo['nominal'] >= $total_bayar) {
    
     // Simpan data pembelian ke tabel pembelian
-    mysqli_query($koneksi, "INSERT INTO pembelian (atas_nama, email_pembeli, lokasi_gudang, jumlah_beli, total_harga, no_hp, harga_truk, id_truk,tanggal_beli,nama_truk,warna_truk) 
-                            VALUES ('$nama_pembeli', '$email_pembeli', '$lokasi_gudang', $jumlah_beli, $total_bayar, '$no_hp', '$harga_truk',' $id_truk','$taanggal_beli','$nama_truk','$warna_truk')");
+    mysqli_query($koneksi, "INSERT INTO pembelian (atas_nama, email_pembeli, lokasi_gudang, jumlah_beli, total_harga, no_hp, harga_truk, id_truk,tanggal_beli,nama_truk,warna_truk,vendor,foto_truk,tahun_produksi) 
+                            VALUES ('$nama_pembeli', '$email_pembeli', '$lokasi_gudang', $jumlah_beli, $total_bayar, '$no_hp', '$harga_truk',' $id_truk','$taanggal_beli','$nama_truk','$warna_truk','$vendor','$foto_truk','$tahun_produksi')");
 
     // Redirect ke halaman dengan pesan sukses
     header("Location: beli_unit.php?id_truk=$id_truk&status=success");
