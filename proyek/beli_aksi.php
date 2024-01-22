@@ -1,6 +1,7 @@
 <?php
 include 'koneksi.php';
 
+// Mendapatkan data pembelian dari form
 $id_truk = $_POST['id_truk'];
 $nama_pembeli = $_POST['nama_pembeli'];
 $email_pembeli = $_POST['email_pembeli'];
@@ -9,34 +10,34 @@ $no_hp = $_POST['no_hp'];
 $jumlah_beli = $_POST['jumlah_beli'];
 $harga_truk = $_POST['harga_truk'];
 $total_bayar = floatval($harga_truk) * floatval($jumlah_beli);
+$warna_truk = $_POST['warna'];
+$nama_truk = $_POST['nama_truk'];
+$taanggal_beli = Date('y-m-d');
+$vendor = $_POST['vendor'];
+$foto_truk =$_POST['foto_truk'];
+$tahun_produksi =$_POST['tahun_produksi'];
+// Mendapatkan data admin (pembeli) untuk mendapatkan id_admin
+$queryAdmin = mysqli_query($koneksi, "SELECT * FROM admin WHERE email = '$email_pembeli'");
+$dataAdmin = mysqli_fetch_assoc($queryAdmin);
+$id_admin = $dataAdmin['id_admin'];
 
-mysqli_begin_transaction($koneksi);
+// Mendapatkan data saldo dari tabel saldo
+$querySaldo = mysqli_query($koneksi, "SELECT * FROM saldo WHERE id_admin = '$id_admin'");
+$dataSaldo = mysqli_fetch_assoc($querySaldo);
 
-try {
-    // Query 1: Insert into pembelian table using prepared statement
-    $query1 = "INSERT INTO pembelian (atas_nama, email_pembeli, lokasi_gudang, jumlah_beli, total_harga, no_hp, id_unit) 
-              VALUES (?, ?, ?, ?, ?, ?, ?)";
-    
-    $stmt1 = mysqli_prepare($koneksi, $query1);
-    mysqli_stmt_bind_param($stmt1, "sssisds", $nama_pembeli, $email_pembeli, $lokasi_gudang, $jumlah_beli, $total_bayar, $no_hp, $id_truk);
-    mysqli_stmt_execute($stmt1);
-    mysqli_stmt_close($stmt1);
+// Memastikan saldo mencukupi untuk pembelian
+if ($dataSaldo['nominal'] >= $total_bayar) {
+   
+    // Simpan data pembelian ke tabel pembelian
+    mysqli_query($koneksi, "INSERT INTO pembelian (atas_nama, email_pembeli, lokasi_gudang, jumlah_beli, total_harga, no_hp, harga_truk, id_truk,tanggal_beli,nama_truk,warna_truk,vendor,foto_truk,tahun_produksi) 
+                            VALUES ('$nama_pembeli', '$email_pembeli', '$lokasi_gudang', $jumlah_beli, $total_bayar, '$no_hp', '$harga_truk',' $id_truk','$taanggal_beli','$nama_truk','$warna_truk','$vendor','$foto_truk','$tahun_produksi')");
 
-    // Query 2: Update saldo table using prepared statement
-    $query2 = "UPDATE saldo SET nominal = nominal - ? WHERE nama_lengkap = ?";
-    $stmt2 = mysqli_prepare($koneksi, $query2);
-    mysqli_stmt_bind_param($stmt2, "ds", $total_bayar, $nama_pembeli);
-    mysqli_stmt_execute($stmt2);
-    mysqli_stmt_close($stmt2);
-
-    // If no exception occurred, commit the transaction
-    mysqli_commit($koneksi);
-
-    $id_truk = isset($_GET['id_truk']) ? $_GET['id_truk'] : 
+    // Redirect ke halaman dengan pesan sukses
     header("Location: beli_unit.php?id_truk=$id_truk&status=success");
-
-} catch (mysqli_sql_exception $x) {
-    mysqli_rollback($koneksi);
-    echo "Error: " . $x->getMessage();
+    exit();
+} else {
+    // Jika saldo tidak mencukupi.
+    header("Location: beli_unit.php?id_truk=$id_truk&status=error");
+    exit();
 }
 ?>

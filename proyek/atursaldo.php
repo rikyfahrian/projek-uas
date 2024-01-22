@@ -38,6 +38,11 @@
   </div>
 
   <div class="container col-md-11 mb-5 ">
+  <div class="card mb-4">
+  <div class="card-body text-center fs-3 fw-semibold ">
+   Pengaturan dan Top Up Saldo
+  </div>
+</div>
     <!--tampilkan data saldo jika sudah membuat saldo -->
     <?php
     include "koneksi.php";
