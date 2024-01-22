@@ -1,6 +1,7 @@
 <?php
 include 'koneksi.php';
 
+$id_admin = $_POST['id_admin'];
 $nama_lengkap = $_POST['nama_lengkap'];
 $perusahaan = $_POST['perusahaan'];
 $alamat = $_POST['alamat'];
@@ -20,7 +21,7 @@ if (mysqli_num_rows($result) > 0) {
     exit();
 } else {
     // Jika Belum maka form input bisa di isi
-    mysqli_query($koneksi, "INSERT INTO saldo VALUES('', '$nama_lengkap', '$perusahaan', '$alamat', '$hp', '$bank', '$rekening', '$no_rekening', '$nominal', '$email')");
+    mysqli_query($koneksi, "INSERT INTO saldo VALUES('', '$nama_lengkap', '$perusahaan', '$alamat', '$hp', '$bank', '$rekening', '$no_rekening', '$nominal', '$email','$id_admin')");
     
     // Memberi Pemberitahuan sukses insert data
     header("location: saldo.php?message=Saldo%20has%20been%20successfully%20created");

@@ -3,16 +3,15 @@ include "warifheader.php";
 ?>
 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-     <?php
-        // ...
-
-        // Set pesan default
-        $pesan = '';
-        // Periksa status dari parameter URL
-        if (isset($_GET['status'])) {
-            if ($_GET['status'] === 'success') {
-                echo '
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
+    <?php
+    // ...
+    // Set pesan default
+    $pesan = '';
+    // Periksa status dari parameter URL
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] === 'success') {
+            echo '
                 <div class="toast-container position-fixed end-0 p-3">
                   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header bg-info">
@@ -22,19 +21,44 @@ include "warifheader.php";
                       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                     <div class="toast-body">
-                      Hallo, Pembelian Unit Berhasil Silahkan Cek Aktivitas Untuk Melakukan Pembayaran Jika Unit Sudah Di Konfirmasi Di Terima.
+                      Hallo, Pembelian Unit Berhasil Silahkan Cek Halaman Table Unit Untuk Melakukan Pembayaran Jika Unit Sudah Di Konfirmasi Di Terima.
                      
                     </div>
-                    <button type="button" class="btn btn-info btn-sm mb-2 mx-2">Lihat Aktivitas</button>
+                    <a href="tableunit.php"><button type="button" class="btn btn-info btn-sm mb-2 mx-2">Lihat Aktivitas</button></a>
                   </div>
                 </div>';
-            } else {
-                $pesan = 'Terjadi kesalahan dalam proses pembelian.';
-            }
+        } else if ($_GET['status'] === 'error') {
+            echo '<div class="toast-container position-fixed end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header bg-danger">
+                   
+                    <strong class="me-auto text-dark">WARIF CORPORATION</strong>
+                    <small class="text-dark">Baru Saja</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body text-danger ">
+                  Pembelian Gagal Saldo Anda Tidak Mencukupi Untuk Melakukan Pembelian Unit Ini
+                   
+                  </div>
+                  
+                </div>
+              </div>';
         }
+    }
 
-        ?>
+    ?>
     <div class="container-fluid mt-5 mb-5">
+        <div class="card mb-3">
+            <div class="card-header">
+                Note
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Lakukan Pengisian Form Pembelian Sebelum Melakukan Pembelian Unit Ini</p>
+                    <p>Setelah submit dan yakin beli silahkan cek inbox/aktivitas pada halaman table unit untuk melakukan konfirmasi unit di terima serta melakukan pembayaran</p>
+                </blockquote>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 col-sm-2">
                 <?php
@@ -74,13 +98,12 @@ include "warifheader.php";
                         Form Pembelian
                     </div>
                     <div class="card-body">
-                        <!--tampilkan data saldo jika sudah membuat saldo -->
+                        <!--tampilkan data admin-->
                         <?php
                         include "koneksi.php";
 
                         $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin");
 
-                        // Jika ada data saldo
                         while ($d = mysqli_fetch_array($query)) {
                         ?>
                             <form class="row g-3" method="post" action="beli_aksi.php">
@@ -100,6 +123,7 @@ include "warifheader.php";
                                     <label for="inputAddress2" class="form-label">No Telepon</label>
                                     <input type="number" class="form-control" name="no_hp" value="<?php echo $d['no_hp']; ?>">
                                 </div>
+
                                 <div class="col-12">
                                     <label for="inputState" class="form-label">Jumlah_Beli</label>
                                     <select id="inputState" class="form-select" oninput="calculateTotal()" name="jumlah_beli">
@@ -114,14 +138,15 @@ include "warifheader.php";
                                 <?php
                                 include "koneksi.php";
                                 $id_truk = $_GET['id_truk'];
-
+                                //menampilkan harga truk beserta menghitung total bayar berdasarkan jumlah beli
                                 $query = mysqli_query($koneksi, "SELECT * FROM truk WHERE id_truk ='$id_truk'");
 
-                                // Jika ada data saldo
                                 while ($t = mysqli_fetch_array($query)) {
                                 ?>
                                     <input type="hidden" class="form-control" name="id_truk" value="<?php echo $t['id_truk']; ?>">
-                                    <input type="hidden" class="text-warning fw-semibold form-control " name="harga_truk" id="harga_truk" value="<?php echo($t['harga_truk']); ?>">
+                                    <input type="text" class="form-control" name="nama_truk" value="<?php echo $t['nama_truk']; ?>">
+                                    <input type="text" class="form-control" name="warna" value="<?php echo $t['warna']; ?>">
+                                    <input type="hidden" class="text-warning fw-semibold form-control " name="harga_truk" id="harga_truk" value="<?php echo ($t['harga_truk']); ?>">
                                 <?php } ?>
                                 <div class="d-grid">
                                     <p class="fw-semibold text-warning" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
@@ -153,7 +178,7 @@ include "warifheader.php";
                     </div>
                 </div>
 
-                <div class="card mt-2">
+                <div class="card mt-4">
                     <div class="card-body">
                         Unit Akan Di Kirim Dan Sampai Ke Gudang Sesuai Waktu Pengiriman, Saldo Akan Otomatis Berkurang Jika Unit Sudah Di Konfirmasi Diterima
                     </div>
@@ -163,15 +188,14 @@ include "warifheader.php";
     </div>
 </main>
 <script>
+    //menghitung harga truk 
     function calculateTotal() {
         var hargaTrukValue = document.getElementById('harga_truk').value;
-
-        // var hargaTruk = parseFloat(document.querySelector("[name='harga_truk']").innerText.replace('Harga Unit : Rp. ', '').replace(/\./g, '').replace(',', ''));
         var numericValue = parseFloat(hargaTrukValue.replace(/[^0-9]/g, ''));
         var jumlahBeli = parseFloat(document.getElementById("inputState").value);
         var totalBayar = numericValue * jumlahBeli;
 
-        // Format the totalBayar using Intl.NumberFormat
+        // Format totalBayar 
         var formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
@@ -179,9 +203,10 @@ include "warifheader.php";
         document.getElementById("totalBayar").innerText = formatter.format(totalBayar);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    //mengatur toast
+    document.addEventListener('DOMContentLoaded', function() {
         const toastLiveExample = new bootstrap.Toast(document.getElementById('liveToast'), {
-            delay: 5000 
+            delay: 6000
         });
         toastLiveExample.show();
     });

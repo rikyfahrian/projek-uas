@@ -1,5 +1,6 @@
 <?php
 include "warifheader.php";
+
 ?>
 <?php
 include 'koneksi.php';
@@ -132,6 +133,14 @@ if (isset($_SESSION['id_saldo'])) {
                 </div>
               </div>
             </div>
+            <?php
+            include "koneksi.php";
+          
+            $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin");
+            while ($d = mysqli_fetch_array($query)) {
+            ?>
+              <input type="hidden" id="nominal" name="id_admin" class="form-control" value="<?php echo $d['id_admin'] ?>" />
+            <?php } ?>
             <div class="d-grid gap-2 col-12">
               <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#konfirmasi">Button</button>
             </div>
