@@ -102,36 +102,64 @@ include "warifheader.php"
 
               while ($d = mysqli_fetch_array($query)) {
               ?>
-                <tr>
-                  <th scope="row"><?php echo $d['id_aset'] ?></th>
-                  <td><?php echo $d['nama_unit'] ?></td>
-                  <td><?php echo $d['tanggal_beli'] ?></td>
-                  <td><?php echo $d['harga_beli'] ?></td>
-                  <td></td>
-                  <td><?php echo $d['vendor'] ?></td>
-                  <?php
-                  // Mendapatkan data blob dari database
-                  $blobData = $d['foto_truk'];
-                  // Mengonversi blob data ke base64
-                  $imageData = base64_encode($blobData);
-                  // Membuat URL gambar
-                  $imageSrc = 'data:image/jpeg;base64,' . $imageData;
+                <form method="post" action="edit_harga.php">
+                  <tr>
+                   <input type="hidden" name="id_aset" value="<?php echo $d['id_aset']; ?>">
+                    <th scope="row"><?php echo $d['id_aset'] ?></th>
+                    <td><?php echo $d['nama_unit'] ?></td>
+                    <td><?php echo $d['tanggal_beli'] ?></td>
+                    <td><?php echo $d['harga_beli'] ?></td>
 
-                  ?>
-                  <style>
-                    .image-container {
-                      width: 200px;
-                      height: 100px;
-                      background-size: cover;
-                      /* Set background gambar dengan menggunakan data base64 langsung */
-                      background-image: url('<?php echo $imageSrc; ?>');
-                    }
-                  </style>
-                  <td><img src="<?php echo $imageSrc; ?>" alt="Foto Unit" class="image-container "></td>
+                    <td><?php echo $d['harga_jual'] ?></td>
+                    <td><?php echo $d['vendor'] ?></td>
+                    <?php
+                    // Mendapatkan data blob dari database
+                    $blobData = $d['foto_truk'];
+                    // Mengonversi blob data ke base64
+                    $imageData = base64_encode($blobData);
+                    // Membuat URL gambar
+                    $imageSrc = 'data:image/jpeg;base64,' . $imageData;
 
-                  <td><?php echo $d['tahun_produksi'] ?></td>
-                  <td></td>
-                </tr>
+                    ?>
+                    <style>
+                      .image-container {
+                        width: 200px;
+                        height: 100px;
+                        background-size: cover;
+                        /* Set background gambar dengan menggunakan data base64 langsung */
+                        background-image: url('<?php echo $imageSrc; ?>');
+                      }
+                    </style>
+                    <td><img src="<?php echo $imageSrc; ?>" alt="Foto Unit" class="image-container "></td>
+
+                    <td><?php echo $d['tahun_produksi'] ?></td>
+                    <td class="d-sm-inline-flex gap-sm-2">
+                      <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editharga">Edit Harga Jual</button>
+                      <button type="button" class="btn btn-sm btn-info">Jual Unit</button>
+                    </td>
+                  </tr>
+
+                  <!--modal-->
+                  <div class="modal fade" id="editharga" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Atur Harga Jual</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="">
+                            <label for="validationDefault03" class="form-label">Masukan Harga Jual</label>
+                            <input type="text" class="form-control" name="harga_jual" required>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                          <button type="submit" class="btn btn-primary">Tetapkan Harga Jual</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               <?php } ?>
             </tbody>
           </table>
