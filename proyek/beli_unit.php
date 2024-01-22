@@ -151,12 +151,6 @@ include "warifheader.php";
 
                                 while ($t = mysqli_fetch_array($query)) {
                                 ?>
-<<<<<<< HEAD
-                                    <input type="hidden" class="form-control" name="id_truk" value="<?php echo $t['id_truk']; ?>">
-
-                                    <input type="hidden" class="text-warning fw-semibold form-control " name="harga_truk" id="harga_truk" value="<?php echo($t['harga_truk']); ?>">
-
-=======
                                     <input type="hidden" name="id_truk" id="idTrukBeli" value="<?php echo $id_truk; ?>">
                                     <input type="hidden" class="form-control" name="nama_truk" value="<?php echo $t['nama_truk']; ?>">
                                     <input type="hidden" class="form-control" name="warna" value="<?php echo $t['warna']; ?>">
@@ -173,7 +167,6 @@ include "warifheader.php";
                                     <div class="image-container visually-hidden" style="background-image: url('<?php echo $imageSrc; ?>');"></div>
                                     <input type="hidden" value="<?php echo $imageSrc; ?>" name="foto_truk">
                                     <input type="hidden" class="text-warning fw-semibold form-control " name="tahun_produksi" value="<?php echo ($t['tahun_produksi']); ?>">
->>>>>>> 4a70558739ef92317d035c024f7bffa1712e1f49
                                 <?php } ?>
                                 <div class="d-grid">
                                     <p class="fw-semibold text-warning" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
@@ -221,13 +214,8 @@ include "warifheader.php";
         var numericValue = parseFloat(hargaTrukValue.replace(/[^0-9]/g, ''));
         var jumlahBeli = parseFloat(document.getElementById("inputState").value);
         var totalBayar = numericValue * jumlahBeli;
-<<<<<<< HEAD
-      
-        // Format the totalBayar using Intl.NumberFormat
-=======
 
         // Format totalBayar 
->>>>>>> 4a70558739ef92317d035c024f7bffa1712e1f49
         var formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',

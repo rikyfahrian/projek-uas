@@ -1,17 +1,17 @@
 <?php
 include 'koneksi.php';
-
+session_start();
 $id_saldo = ''; // Set the default email value
 $user_has_saldo = false; // Flag to check if the user has saldo
 
 // Check if the user is logged in or get the user's email from the session, assuming you have a way to identify users
-if (isset($_SESSION['id_saldo'])) {
-  $email = $_SESSION['id_saldo'];
+// if (isset($_SESSION['id_saldo'])) {
+//   $email = $_SESSION['id_saldo'];
 
-  // Check if the user already has a record in the database
-  $result = mysqli_query($koneksi, "SELECT * FROM saldo WHERE id_saldo = '$id_saldo'");
-  $user_has_saldo = (mysqli_num_rows($result) > 0);
-}
+//   // Check if the user already has a record in the database
+//   $result = mysqli_query($koneksi, "SELECT * FROM saldo WHERE id_saldo = '$id_saldo'");
+//   $user_has_saldo = (mysqli_num_rows($result) > 0);
+// }
 ?>
 
 <!DOCTYPE html>
@@ -292,8 +292,9 @@ if (isset($_SESSION['id_saldo'])) {
     <?php
     include "koneksi.php";
 
+
     // Mengambil data harga per kilo dari tabel harga
-    $data = mysqli_query($koneksi, "SELECT nominal from saldo");
+    $data = mysqli_query($koneksi, "SELECT nominal FROM saldo where id_admin = '" . $_SESSION['id_admin'] . "'");
 
     if (mysqli_num_rows($data) > 0) {
       while ($d = mysqli_fetch_array($data)) {
@@ -307,7 +308,7 @@ if (isset($_SESSION['id_saldo'])) {
       <?php
       }
     } else {
-      // Tampilkan logo uang dan nominal = 0 jika tidak ada data saldo
+   
       ?>
       <div class="d-flex justify-content-end mx-3">
         <svg xmlns="http://www.w3.org/2000/svg" height="26" width="28" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
