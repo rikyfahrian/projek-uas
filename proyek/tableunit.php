@@ -97,40 +97,22 @@ include "warifheader.php"
               <?php
               include "koneksi.php";
 
-              $no = 1;
-              $query = mysqli_query($koneksi, "SELECT * FROM aset where id_aset");
+              $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '".$_SESSION["idadmin"]."';");
 
               while ($d = mysqli_fetch_array($query)) {
               ?>
                 <form method="post" action="edit_harga.php">
                   <tr>
-                   <input type="hidden" name="id_aset" value="<?php echo $d['id_aset']; ?>">
-                    <th scope="row"><?php echo $d['id_aset'] ?></th>
-                    <td><?php echo $d['nama_unit'] ?></td>
+                    <th scope="row"><?php echo $d['id'] ?></th>
+                    <td><?php echo $d['nama'] ?></td>
                     <td><?php echo $d['tanggal_beli'] ?></td>
-                    <td><?php echo $d['harga_beli'] ?></td>
+                    <td>RP. <?php echo number_format($d['harga'], 0, ',', '.'); ?></td>
 
-                    <td><?php echo $d['harga_jual'] ?></td>
+                    <td>RP. <?php echo number_format($d['harga_jual'], 0, ',', '.'); ?></td>
                     <td><?php echo $d['vendor'] ?></td>
-                    <?php
-                    // Mendapatkan data blob dari database
-                    $blobData = $d['foto_truk'];
-                    // Mengonversi blob data ke base64
-                    $imageData = base64_encode($blobData);
-                    // Membuat URL gambar
-                    $imageSrc = 'data:image/jpeg;base64,' . $imageData;
-
-                    ?>
-                    <style>
-                      .image-container {
-                        width: 200px;
-                        height: 100px;
-                        background-size: cover;
-                        /* Set background gambar dengan menggunakan data base64 langsung */
-                        background-image: url('<?php echo $imageSrc; ?>');
-                      }
-                    </style>
-                    <td><img src="<?php echo $imageSrc; ?>" alt="Foto Unit" class="image-container "></td>
+                  
+                   
+                    <td><img src="<?php echo $d["foto"]; ?>" alt="Foto Unit" class="image-container " height="100px"></td>
 
                     <td><?php echo $d['tahun_produksi'] ?></td>
                     <td class="d-sm-inline-flex gap-sm-2">
@@ -170,103 +152,46 @@ include "warifheader.php"
     <!--klaim unit-->
     <div class="card text-center mb-5">
       <div class="card-header">
-        <h5 class="card-title text-success ">Klaim Dan Dan Bayar Unit</h5>
+        <h5 class="card-title text-success ">Order Ongoing</h5>
       </div>
-      <div class="card-body">
-
-        <?php
-        include "koneksi.php";
-
-        $query = mysqli_query($koneksi, "SELECT * FROM pembelian where id_pembelian");
-
-        $sudahbayar = false;
-
-        if (mysqli_num_rows($query) > 0) {
-
-          while ($d = mysqli_fetch_array($query)) {
-
-            $id_pembelian = $d['id_pembelian'];
-
-            // Cek apakah unit dengan id_pembelian tertentu sudah dibayar
-            $queryPembayaran = mysqli_query($koneksi, "SELECT * FROM pembayaran WHERE id_pembelian = '$id_pembelian'");
-            $belumbayar = mysqli_num_rows($queryPembayaran) > 0;
-
-            // Tampilkan formulir hanya jika belum dibayar
-            if (!$belumbayar) {
-        ?>
-              <form method="post" action="klaimunit.php">
-                <div class="container d-flex mb-4" id="formContainer">
-                  <div class="card text-start " style="width: 88rem;">
-                    <button type="button" class="btn-close mx-2" aria-label="Close"></button>
-                    <ul class="list-group list-group-flush">
-
-                      <li class="list-group-item visually-hidden"><?php echo $d['id_pembelian'] ?></li>
-                      <li class="list-group-item">Pembelian Atas Nama : <?php echo $d['atas_nama'] ?></li>
-                      <li class="list-group-item">Tanggal Beli : <?php echo $d['tanggal_beli'] ?></li>
-                      <li class="list-group-item">Unit Yang Di Beli : <?php echo $d['nama_truk'] ?></li>
-                      <li class="list-group-item">Jumlah beli : <?php echo $d['jumlah_beli'] ?></li>
-                      <li class="list-group-item">Harga : Rp. <?php echo number_format($d['harga_truk'], 0, ',', '.') ?></li>
-                      <li class="list-group-item">Total Harga : Rp. <?php echo number_format($d['total_harga'], 0, ',', '.') ?></li>
-                      <li class="list-group-item">
-                        <input type="hidden" class="form-control" name="id_pembelian" value="<?php echo $d['id_pembelian'] ?>">
-                        <input type="hidden" class="form-control" name="jumlah_beli" value="<?php echo $d['jumlah_beli'] ?>">
-                        <input type="hidden" class="form-control" name="harga_truk" value="<?php echo $d['harga_truk'] ?>">
-                        <input type="hidden" class="form-control" name="total_harga" value="<?php echo $d['total_harga'] ?>">
-                        <input type="hidden" class="form-control" name="email_pembeli" value="<?php echo $d['email_pembeli'] ?>">
-                        <input type="hidden" class="form-control" name="vendor" value="<?php echo $d['vendor'] ?>">
-                        <?php
-                        // Mendapatkan data blob dari database
-                        $blobData = $d['foto_truk'];
-                        // Mengonversi blob data ke base64
-                        $imageData = base64_encode($blobData);
-                        // Membuat URL gambar
-                        $imageSrc = 'data:image/jpeg;base64,' . $imageData;
-                        ?>
-
-                        <input type="hidden" value="<?php echo $imageSrc; ?>" name="foto_truk">
-
-                        <input type="hidden" class="form-control" name="tahun_produksi" value="<?php echo $d['tahun_produksi'] ?>">
-                        <div class="d-grid gap-2">
-                          <button class="btn btn-info btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#konfirmasi">Unit Di Terima</button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <!-- Modal Konfirmasi-->
-                <div class="modal fade" id="konfirmasi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header bg-info-subtle ">
-                        <h1 class="modal-title fs-5 " id="exampleModalLabel">Konfirmasi</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p class="fw-semibold">Konfirmasi Masih Unit Di Terima Dan Bayar ? saldo akan di tarik sesuai total harga beli</p>
-                      </div>
-                      <div class="modal-footer bg-info-subtle">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-info">Ya </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
+      <div class="card-body d-flex justify-content-center flex-wrap gap-5">
           <?php
-              $sudahbayar = true;
-            }
-          }
-        }
-        if (!$sudahbayar) {
-          ?>
-          <div class="card">
-            <div class="card-body">
-              data masih kosong, data pembelian akan muncul setelah melakukan pembelian unit.
-            </div>
-          </div>
+              include "koneksi.php";
 
-        <?php  } ?>
+              $query = mysqli_query($koneksi, " SELECT truk.foto, truk.nama, pembelian.jumlah_beli, pembelian.total_bayar,pembelian.id
+                from pembelian
+                join truk on pembelian.truk = truk.id
+                join admin on pembelian.owner = admin.id
+                where admin.id = '".$_SESSION["idadmin"]."' AND pembelian.klaim = 0;
+              
+               ");
+
+               if (mysqli_num_rows($query) != 0) {
+
+                      while ($e = mysqli_fetch_array($query)) {
+                      ?>
+                    <div class="card" style="width: 18rem;">
+                      <img src="<?php echo $e["foto"]; ?>" class="card-img-top" alt="truk foto">
+                          <div class="card-body">
+                            <h5 class="card-title"><?php echo $e["nama"]; ?></h5>
+                            <p>Jumlah Beli <?php echo $e["jumlah_beli"] ;?></p>
+                            <p class="card-text">RP. <?php echo number_format($e['total_bayar'], 0, ',', '.'); ?></p>
+                            
+                            <a href="klaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-primary">Klaim</a>
+                            <a href="batalklaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-danger">Batal</a>
+
+                          </div>
+                    </div>
+              
+            <?php 
+
+              }
+              }else {
+               echo "<h1>Blum Ada Transaksi</h1>";
+              }
+              ?>
+      
+  
       </div>
       <div class="card-footer text-body-secondary">
         Warif Corporation

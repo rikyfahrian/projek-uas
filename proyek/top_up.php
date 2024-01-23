@@ -1,21 +1,37 @@
 <?php
 include "koneksi.php";
+session_start();
 
-// Pastikan $_POST['top_up'] memiliki nilai dan merupakan angka yang valid
-if (isset($_POST['top_up']) && is_numeric($_POST['top_up'])) {
-    $a = $_POST['top_up'];
-    $b = $_POST['nominal'];
-    $c = $a + $b;
+$a = $_POST["top_up"];
 
-    // Sesuaikan query UPDATE dengan WHERE yang sesuai
-    $query = mysqli_query($koneksi, "UPDATE saldo SET nominal='$c' WHERE id_saldo ");
-    
-    if ($query) {
-        header("Location: atursaldo.php?status=topup_berhasil");
-    } else {
-        echo "Top-up gagal";
+
+
+try {
+    // Buat prepared statement
+    $stmt = mysqli_prepare($koneksi, "UPDATE saldo SET nominal = nominal + ? WHERE id = ?");
+
+    // Jika terdapat kesalahan dalam membuat prepared statement
+    if (!$stmt) {
+        throw new Exception("Gagal membuat prepared statement: " . mysqli_error($koneksi));
     }
-} else {
-    echo "Jumlah top-up tidak valid";
+
+    // Bind parameter ke prepared statement
+    mysqli_stmt_bind_param($stmt, "ii", $a, $_SESSION['idadmin']);
+
+    // Eksekusi prepared statement
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception("Gagal mengeksekusi prepared statement: " . mysqli_stmt_error($stmt));
+    }
+
+    // Tutup prepared statement
+    mysqli_stmt_close($stmt);
+
+    // Redirect atau lakukan tindakan lainnya setelah berhasil
+    header("Location: saldo.php?status=topup_berhasil");
+    exit();
+} catch (Exception $e) {
+    // Tangani kesalahan
+    echo "Terjadi kesalahan: " . $e->getMessage();
 }
+
 ?>

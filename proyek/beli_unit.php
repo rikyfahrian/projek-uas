@@ -71,30 +71,30 @@ include "warifheader.php";
                 <?php
                 include "koneksi.php";
                 $id = $_GET['id_truk'];
-                $query = mysqli_query($koneksi, "SELECT * FROM truk where id_truk='$id'");
+                $query = mysqli_query($koneksi, "SELECT * FROM truk where id='$id'");
 
                 while ($d = mysqli_fetch_array($query)) {
                 ?>
 
                     <div class="card mb-3">
                         <?php
-                        // Mendapatkan data blob dari database
-                        $blobData = $d['foto_truk'];
-                        // Mengonversi blob data ke base64
-                        $imageData = base64_encode($blobData);
-                        // Membuat URL gambar
-                        $imageSrc = 'data:image/jpeg;base64,' . $imageData;
+                        // // Mendapatkan data blob dari database
+                        // $blobData = $d['foto_truk'];
+                        // // Mengonversi blob data ke base64
+                        // $imageData = base64_encode($blobData);
+                        // // Membuat URL gambar
+                        // $imageSrc = 'data:image/jpeg;base64,' . $imageData;
                         ?>
-                        <img src="<?php echo $imageSrc; ?>" class="card-img-top" alt="...">
+                        <img src="<?php echo $d["foto"] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h4 class="card-title"><?php echo $d['nama_truk'] ?></h4>
-                            <h4 class="card-title text-info">Rp.<?php echo number_format($d['harga_truk'], 0, ',', '.'); ?></h4>
+                            <h4 class="card-title"><?php echo $d['nama'] ?></h4>
+                            <h4 class="card-title text-info" id="harga_truk">Rp.<?php echo number_format($d['harga'], 0, ',', '.'); ?></h4>
                             <p class="card-text fw-bold mb-1">Deskripsi Singkat</p>
                             <p class="card-text"><?php echo $d['deskripsi']; ?></p>
                             <p class="card-text text-md-start fw-semibold  mb-1">Spesifikasi : <?php echo $d['spek']; ?></p>
                             <p class="card-text  text-md-start fw-semibold  mb-1">Warna : <?php echo $d['warna']; ?></p>
                             <p class="card-text  text-md-start fw-semibold  mb-2">Vendor : <?php echo $d['vendor']; ?></p>
-                            <p class="card-text  text-md-start fw-semibold  mb-2">Foto Unit : <?php echo $d['foto_unit']; ?></p>
+                            <!-- <p class="card-text  text-md-start fw-semibold  mb-2">Foto Unit : <?php echo $d['foto']; ?></p> -->
                             <p class="card-text  text-md-start fw-semibold  mb-2">Tahun Produksi : <?php echo $d['tahun_produksi']; ?></p>
                         </div>
                     </div>
@@ -110,26 +110,26 @@ include "warifheader.php";
                         <?php
                         include "koneksi.php";
 
-                        $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin");
+                        $query = mysqli_query($koneksi, "SELECT * FROM admin where id = '" . $_SESSION['idadmin'] . "'");
 
                         while ($d = mysqli_fetch_array($query)) {
                         ?>
-                            <form class="row g-3" method="post" action="beli_aksi.php">
+                            <form class="row g-3" method="post" action="beli_aksi.php?id_truk=<?php echo $id ?>">
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email_pembeli" value="<?php echo $d['email']; ?>">
+                                    <input type="email"  class="form-control" name="email_pembeli" value="<?php echo $d['email']; ?>" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="nama" class="form-label">Atas Nama</label>
-                                    <input type="text" class="form-control" name="nama_pembeli" value="<?php echo $d['nama']; ?>">
+                                    <input type="text" class="form-control" name="nama_pembeli" value="<?php echo $d['nama']; ?>" readonly>
                                 </div>
                                 <div class="col-12">
                                     <label for="gudang" class="form-label">lokasi Gudang</label>
-                                    <input type="text" class="form-control" name="lokasi_gudang" value="<?php echo $d['lokasi_gudang']; ?>">
+                                    <input type="text" class="form-control" name="lokasi_gudang" value="<?php echo $d['alamat']; ?>" readonly>
                                 </div>
                                 <div class="col-12">
                                     <label for="inputAddress2" class="form-label">No Telepon</label>
-                                    <input type="number" class="form-control" name="no_hp" value="<?php echo $d['no_hp']; ?>">
+                                    <input type="number" class="form-control" name="no_hp" value="<?php echo $d['no_hp']; ?>" readonly> 
                                 </div>
 
                                 <div class="col-12">
@@ -143,31 +143,7 @@ include "warifheader.php";
                                         <option value="5">5</option>
                                     </select>
                                 </div>
-                                <?php
-                                include "koneksi.php";
-                                $id_truk = $_GET['id_truk'];
-                                //menampilkan harga truk beserta menghitung total bayar berdasarkan jumlah beli
-                                $query = mysqli_query($koneksi, "SELECT * FROM truk WHERE id_truk ='$id_truk'");
-
-                                while ($t = mysqli_fetch_array($query)) {
-                                ?>
-                                    <input type="hidden" name="id_truk" id="idTrukBeli" value="<?php echo $id_truk; ?>">
-                                    <input type="hidden" class="form-control" name="nama_truk" value="<?php echo $t['nama_truk']; ?>">
-                                    <input type="hidden" class="form-control" name="warna" value="<?php echo $t['warna']; ?>">
-                                    <input type="hidden" class="text-warning fw-semibold form-control " name="harga_truk" id="harga_truk" value="<?php echo ($t['harga_truk']); ?>">
-                                    <input type="hidden" class="text-warning fw-semibold form-control " name="vendor" value="<?php echo ($t['vendor']); ?>">
-                                    <?php
-                                    // Mendapatkan data blob dari database
-                                    $blobData = $t['foto_truk'];
-                                    // Mengonversi blob data ke base64
-                                    $imageData = base64_encode($blobData);
-                                    // Membuat URL gambar
-                                    $imageSrc = 'data:image/jpeg;base64,' . $imageData;
-                                    ?>
-                                    <div class="image-container visually-hidden" style="background-image: url('<?php echo $imageSrc; ?>');"></div>
-                                    <input type="hidden" value="<?php echo $imageSrc; ?>" name="foto_truk">
-                                    <input type="hidden" class="text-warning fw-semibold form-control " name="tahun_produksi" value="<?php echo ($t['tahun_produksi']); ?>">
-                                <?php } ?>
+                        
                                 <div class="d-grid">
                                     <p class="fw-semibold text-warning" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
                                 </div>
@@ -210,7 +186,7 @@ include "warifheader.php";
 <script>
     //menghitung harga truk 
     function calculateTotal() {
-        var hargaTrukValue = document.getElementById('harga_truk').value;
+        var hargaTrukValue = document.getElementById('harga_truk').textContent;
         var numericValue = parseFloat(hargaTrukValue.replace(/[^0-9]/g, ''));
         var jumlahBeli = parseFloat(document.getElementById("inputState").value);
         var totalBayar = numericValue * jumlahBeli;
