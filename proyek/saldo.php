@@ -47,10 +47,10 @@ include "warifheader.php";
         <!--tampilkan data saldo jika sudah membuat saldo -->
         <?php
         include "koneksi.php";
-        $query = mysqli_query($koneksi, "SELECT * FROM admin where id = '" . $_SESSION['idadmin'] . "'");
-        if (mysqli_num_rows($query) > 0) {
-          // Jika ada data saldo
-          while ($d = mysqli_fetch_array($query)) {
+          $query = mysqli_query($koneksi, "SELECT * FROM admin where id = '" . $_SESSION['idadmin'] . "'");
+          if (mysqli_num_rows($query) > 0) {
+            // Jika ada data saldo
+            while ($d = mysqli_fetch_array($query)) {
         ?>
         <!--top up saldo-->
             <div class="card text-center mb-5">
@@ -113,8 +113,8 @@ include "warifheader.php";
                   <div class="form-outline mb-4">
                     <label class="mb-2">Bank</label>
                     <?php
-                    $data = mysqli_query($koneksi, "SELECT bank FROM saldo where id = '" . $_SESSION['idsaldo'] . "'");
-                    $row = mysqli_fetch_assoc($data);
+                      $data = mysqli_query($koneksi, "SELECT bank FROM saldo where id = '" . $_SESSION['idsaldo'] . "'");
+                      $row = mysqli_fetch_assoc($data);
                     ?>
                     <input type="text" id="bank" name="bank" class="form-control" disabled value="<?php echo $row['bank']; ?>" />
                   </div>

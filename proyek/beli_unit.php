@@ -1,20 +1,11 @@
 <?php
 include "warifheader.php";
 ?>
-<style>
-    /*style untuk menampilkan foto truk pada form beli yang di hidden */
-    .image-container {
-        width: 450px; 
-        height: 300px;
-        background-size: cover; 
-    }
-</style>
 
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
     <?php
     // ...
     // Set pesan default
-    $pesan = '';
     // Periksa status dari parameter URL
     if (isset($_GET['status'])) {
         if ($_GET['status'] === 'success') {
@@ -76,15 +67,7 @@ include "warifheader.php";
                 while ($d = mysqli_fetch_array($query)) {
                 ?>
 
-                    <div class="card mb-3">
-                        <?php
-                        // // Mendapatkan data blob dari database
-                        // $blobData = $d['foto_truk'];
-                        // // Mengonversi blob data ke base64
-                        // $imageData = base64_encode($blobData);
-                        // // Membuat URL gambar
-                        // $imageSrc = 'data:image/jpeg;base64,' . $imageData;
-                        ?>
+                    <div class="card mb-3">        
                         <img src="<?php echo $d["foto"] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h4 class="card-title"><?php echo $d['nama'] ?></h4>

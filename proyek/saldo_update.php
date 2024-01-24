@@ -12,27 +12,32 @@ $hp = $_POST['no_hp'];
 
 $id = $_SESSION['idadmin'];
 
+try {
 // Persiapkan query dengan prepared statement
-$query = "UPDATE admin SET 
-    nama = ?,
-    perusahaan = ?,
-    alamat = ?,
-    no_hp = ?,
-    email = ?
-    WHERE id = ?";
+    $query = "UPDATE admin SET 
+        nama = ?,
+        perusahaan = ?,
+        alamat = ?,
+        no_hp = ?,
+        email = ?
+        WHERE id = ?";
 
-// Buat prepared statement
-$stmt = mysqli_prepare($koneksi, $query);
+    // Buat prepared statement
+    $stmt = mysqli_prepare($koneksi, $query);
 
-// Bind parameter ke prepared statement
-mysqli_stmt_bind_param($stmt, "sssssi", $nama_lengkap, $perusahaan, $alamat, $hp, $email, $id);
+    // Bind parameter ke prepared statement
+    mysqli_stmt_bind_param($stmt, "sssssi", $nama_lengkap, $perusahaan, $alamat, $hp, $email, $id);
 
-// Eksekusi prepared statement
-mysqli_stmt_execute($stmt);
+    // Eksekusi prepared statement
+    mysqli_stmt_execute($stmt);
 
-// Tutup prepared statement
-mysqli_stmt_close($stmt);
+    // Tutup prepared statement
+    mysqli_stmt_close($stmt);
 
-// Redirect ke halaman saldo.php
-header("location: saldo.php");
+    // Redirect ke halaman saldo.php
+    header("location: saldo.php");
+}catch(Exception $e) {
+    echo $e->getMessage();
+}
+
 ?>

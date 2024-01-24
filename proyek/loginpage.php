@@ -39,7 +39,7 @@
  
     <div class="container justify-content-center align-content-center  d-flex ">
 
-    <?php
+           <?php
                   if (isset($_GET['pesan'])) {
                     if ($_GET['pesan'] == "gagallogin") {
                       echo '<div class="alert alert-danger position-absolute z-3 mt-3 " role="alert" >

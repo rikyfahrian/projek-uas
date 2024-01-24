@@ -3,10 +3,7 @@ include "warifheader.php"
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
   <div class="container mt-5 mb-5">
-
-
     <div class="row row-cols-1 row-cols-md-2 g-4">
 
       <?php
@@ -38,6 +35,8 @@ include "warifheader.php"
             </div>
           </div>
         </div>
+        
       <?php } ?>
+
     </div>
 </main>

@@ -85,7 +85,8 @@ include "warifheader.php"
                 <th scope="col">Nama Unit</th>
                 <th scope="col">Tanggal Beli</th>
                 <th scope="col">Harga Beli</th>
-                <th scope="col">Harga Jual</th>
+                <th scope="col">Jumlah Unit</th>
+                <th scope="col">Harga Jual 1 Unit</th>
                 <th scope="col">Vendor</th>
                 <th scope="col">Foto Unit</th>
                 <th scope="col">Tahun Produksi</th>
@@ -97,16 +98,19 @@ include "warifheader.php"
               <?php
               include "koneksi.php";
 
-              $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '".$_SESSION["idadmin"]."';");
+              $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.jumlah_beli,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '".$_SESSION["idadmin"]."';");
 
               while ($d = mysqli_fetch_array($query)) {
+               
               ?>
-                <form method="post" action="edit_harga.php">
+                  
                   <tr>
                     <th scope="row"><?php echo $d['id'] ?></th>
                     <td><?php echo $d['nama'] ?></td>
                     <td><?php echo $d['tanggal_beli'] ?></td>
                     <td>RP. <?php echo number_format($d['harga'], 0, ',', '.'); ?></td>
+                    <td><?php echo $d["jumlah_beli"] ?></td>
+                 
 
                     <td>RP. <?php echo number_format($d['harga_jual'], 0, ',', '.'); ?></td>
                     <td><?php echo $d['vendor'] ?></td>
@@ -115,34 +119,38 @@ include "warifheader.php"
                     <td><img src="<?php echo $d["foto"]; ?>" alt="Foto Unit" class="image-container " height="100px"></td>
 
                     <td><?php echo $d['tahun_produksi'] ?></td>
-                    <td class="d-sm-inline-flex gap-sm-2">
-                      <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editharga">Edit Harga Jual</button>
-                      <button type="button" class="btn btn-sm btn-info">Jual Unit</button>
+
+                    <td class="d-sm-inline-flex gap-sm-2 p-3" >
+                     
+                      <?php
+                        if (isset($_GET['idaset']) && $_GET["idaset"] == $d["id"]) {
+                          $idaset= $_GET["idaset"]
+                          ?>
+                
+                        <form method="post" action="edit_harga.php?idaset=<?php echo $idaset ?>" >
+                      
+                            <div class="m-2">
+                              <label for="harga_jual" class="form-label"></label>
+                              <input type="number" class="form-control" name="harga_jual" id="harga_jual" required>
+                              </div>
+                            </div>
+
+                            <div class="m-2">
+                            <button type="submit" class="btn btn-primary ">Edit</button>
+                            <button type="button" class="btn btn-danger " data-bs-dismiss="modal" onclick="window.location.href='tableunit.php'">Batal</button>
+                            </div>
+                           </div>
+
+                        </form>
+                 
+                      <?php }else { ?>
+                       <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"  onclick="window.location.href='tableunit.php?idaset=<?php echo $d['id']?>'">Edit Harga Jual</button>
+                       <button type="button" class="btn btn-sm btn-info">Jual Unit</button>
+                      <?php } ?>
                     </td>
                   </tr>
+                  <?php } ?>
 
-                  <!--modal-->
-                  <div class="modal fade" id="editharga" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Atur Harga Jual</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="">
-                            <label for="validationDefault03" class="form-label">Masukan Harga Jual</label>
-                            <input type="text" class="form-control" name="harga_jual" required>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                          <button type="submit" class="btn btn-primary">Tetapkan Harga Jual</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              <?php } ?>
             </tbody>
           </table>
         </div>
@@ -158,7 +166,7 @@ include "warifheader.php"
           <?php
               include "koneksi.php";
 
-              $query = mysqli_query($koneksi, " SELECT truk.foto, truk.nama, pembelian.jumlah_beli, pembelian.total_bayar,pembelian.id
+              $query = mysqli_query($koneksi, " SELECT truk.foto, truk.nama, pembelian.jumlah_beli, pembelian.total_bayar,pembelian.id,truk.id AS idtruk
                 from pembelian
                 join truk on pembelian.truk = truk.id
                 join admin on pembelian.owner = admin.id
@@ -177,7 +185,7 @@ include "warifheader.php"
                             <p>Jumlah Beli <?php echo $e["jumlah_beli"] ;?></p>
                             <p class="card-text">RP. <?php echo number_format($e['total_bayar'], 0, ',', '.'); ?></p>
                             
-                            <a href="klaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-primary">Klaim</a>
+                            <a href="klaimunit.php?buyid=<?php echo $e["id"]; ?>&trukid=<?php echo $e["idtruk"]; ?>" class="btn btn-primary">Klaim</a>
                             <a href="batalklaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-danger">Batal</a>
 
                           </div>
@@ -200,23 +208,7 @@ include "warifheader.php"
 
   </div>
 
-  <!-- Modal Tambah Unit -->
-  <div class="modal fade" id="tambahUnitModal" tabindex="-1" aria-labelledby="tambahUnitModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="tambahUnitModalLabel">Tambah Unit Kontainer</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Tambah</button>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 </main>
 
 

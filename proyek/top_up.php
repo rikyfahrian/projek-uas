@@ -28,7 +28,7 @@ try {
     header("Location: saldo.php?status=topup_berhasil");
     exit();
 } catch (Exception $e) {
-    // Tangani kesalahan
+    
     echo "Terjadi kesalahan: " . $e->getMessage();
 }
 

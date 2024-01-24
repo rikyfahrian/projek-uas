@@ -5,19 +5,16 @@ session_start();
 $buyId = $_GET["buyid"];
 
 try {
-$req = mysqli_query($koneksi,"DELETE FROM pembelian WHERE id = '$buyId'");
+    $req = mysqli_query($koneksi,"DELETE FROM pembelian WHERE id = '$buyId'");
 
-if($req) {
-    header("Location: tableunit.php");
-    exit();
+    if($req) {
+        header("Location: tableunit.php");
+        exit();
 
-}else {
-   echo "error bang";
-}
+    }else {
+    echo "error bang";
+    }
 
 }catch(Exception $e) {
-
     echo $e->getMessage();
-
-
 }
