@@ -113,7 +113,7 @@ include "warifheader.php";
                   <div class="form-outline mb-4">
                     <label class="mb-2">Bank</label>
                     <?php
-                    $data = mysqli_query($koneksi, "SELECT bank FROM saldo where id = '" . $_SESSION['idadmin'] . "'");
+                    $data = mysqli_query($koneksi, "SELECT bank FROM saldo where id = '" . $_SESSION['idsaldo'] . "'");
                     $row = mysqli_fetch_assoc($data);
                     ?>
                     <input type="text" id="bank" name="bank" class="form-control" disabled value="<?php echo $row['bank']; ?>" />

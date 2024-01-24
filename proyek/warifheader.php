@@ -275,13 +275,21 @@ session_start();
   <!--navbar nya-->
 
   <header class="navbar border-bottom  border-dark-subtle sticky-top bg-dark-subtle flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 col-12 text-center me-0 px-3 fs-6 text-info-emphasis" href="http://localhost/uas/proyek/landingpage.php#">WARIF CORPORATION
+    <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 col-12 text-center me-0 px-3 fs-6 text-info-emphasis" href="http://localhost/projek-uas/proyek/landingpage.php">WARIF CORPORATION
     </a>
     <?php
     include "koneksi.php";
-    $data = mysqli_query($koneksi, "SELECT nominal FROM saldo where id = '" . $_SESSION['idadmin'] . "'");
+    $data = mysqli_query($koneksi, "SELECT saldo.id,saldo.nominal 
+    FROM saldo 
+    join admin on saldo.id = admin.saldo
+    where admin.id = '" . $_SESSION['idadmin'] . "'");
+
     $row = mysqli_fetch_assoc($data);
+
     $_SESSION["currentsaldo"] =  $row["nominal"] ;
+    $_SESSION["idsaldo"] =  $row["id"] ;
+
+    
    
     if (  $row["nominal"] > 0) {
     ?>

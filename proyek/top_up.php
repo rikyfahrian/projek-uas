@@ -4,8 +4,6 @@ session_start();
 
 $a = $_POST["top_up"];
 
-
-
 try {
     // Buat prepared statement
     $stmt = mysqli_prepare($koneksi, "UPDATE saldo SET nominal = nominal + ? WHERE id = ?");
@@ -16,7 +14,7 @@ try {
     }
 
     // Bind parameter ke prepared statement
-    mysqli_stmt_bind_param($stmt, "ii", $a, $_SESSION['idadmin']);
+    mysqli_stmt_bind_param($stmt, "ii", $a, $_SESSION['idsaldo']);
 
     // Eksekusi prepared statement
     if (!mysqli_stmt_execute($stmt)) {
