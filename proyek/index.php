@@ -13,14 +13,14 @@
       <div class="main-content">
         <div class="title">
           <h1>WARIF CORPORATION</h1>
-          <p>Your Partner in Truck Sales and Services Excellence.</p>
-          <p>Top-quality vehicles, reliable maintenance, and unparalleled expertise.</p>
-          <p>Elevate your fleet with Warif Corporation's exceptional solutions.</p>
-          <button onclick="window.location.href='loginpage.php'">Dashboard</button>
+          <p>Selamat Datang Di Aplikasi Web Kami</p>
+          <p>Aplikasi Yang Di Buat Khusus Untuk Memanajemen Gudang Truk Yang Terintegrasi Dengan Beberapa Perusahaan Truk Ternama.</p>
+          <p>Aplikasi Kami Di Lengkapi Dengan Fitur Saldo Yang Menjadi Fitur Pelengkap Untuk Manajemen Gudang Truk.</p>
+          <button onclick="window.location.href='loginpage.php'">Mulai Uji Coba</button>
         </div>
 
         <div class="gambar-truk">
-          <img src="truk.png" alt="truk" />
+          <img src="../image/truk.png" alt="truk" />
         </div>
       </div>
     </main>

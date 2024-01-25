@@ -8,6 +8,6 @@ session_start(); // Start the session
     session_destroy();
 
     // Redirect to the login page or any other page after logout
-    header("Location: loginpage.php");
+    header("Location: loginpage.php?pesan=logout");
     exit(); // Ensure that no code is executed after the header redirection
 
