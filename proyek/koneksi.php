@@ -1,8 +1,8 @@
 <?php
 
-$koneksi = mysqli_connect("localhost","root","","warif_db_fix");
+    try {
+        $koneksi = mysqli_connect("localhost","root","","testing_uas");
+    }catch(Exception $e) {
+        echo $e->getMessage();  
+    }
 
-if (mysqli_connect_errno()){
-    echo "gagal koneksi ke database warif:".mysqli_connect_error();
-}
-?>

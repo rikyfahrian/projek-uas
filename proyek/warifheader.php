@@ -1,17 +1,5 @@
 <?php
-include 'koneksi.php';
-
-$id_saldo = ''; // Set the default email value
-$user_has_saldo = false; // Flag to check if the user has saldo
-
-// Check if the user is logged in or get the user's email from the session, assuming you have a way to identify users
-if (isset($_SESSION['id_saldo'])) {
-  $email = $_SESSION['id_saldo'];
-
-  // Check if the user already has a record in the database
-  $result = mysqli_query($koneksi, "SELECT * FROM saldo WHERE id_saldo = '$id_saldo'");
-  $user_has_saldo = (mysqli_num_rows($result) > 0);
-}
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -287,28 +275,35 @@ if (isset($_SESSION['id_saldo'])) {
   <!--navbar nya-->
 
   <header class="navbar border-bottom  border-dark-subtle sticky-top bg-dark-subtle flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 col-12 text-center me-0 px-3 fs-6 text-info-emphasis" href="http://localhost/uas/proyek/landingpage.php#">WARIF CORPORATION
+    <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 col-12 text-center me-0 px-3 fs-6 text-info-emphasis" href="http://localhost/projek-uas/proyek/landingpage.php">WARIF CORPORATION
     </a>
     <?php
     include "koneksi.php";
+    $data = mysqli_query($koneksi, "SELECT saldo.id,saldo.nominal 
+      FROM saldo 
+      join admin on saldo.id = admin.saldo
+      where admin.id = '" . $_SESSION['idadmin'] . "'");
 
-    // Mengambil data harga per kilo dari tabel harga
-    $data = mysqli_query($koneksi, "SELECT nominal from saldo");
+    $row = mysqli_fetch_assoc($data);
 
-    if (mysqli_num_rows($data) > 0) {
-      while ($d = mysqli_fetch_array($data)) {
+    $_SESSION["currentsaldo"] =  $row["nominal"];
+    $_SESSION["idsaldo"] =  $row["id"];
+
+
+
+    if ($row["nominal"] > 0) {
     ?>
-        <div class="d-flex justify-content-start mx-lg-2 mx-3 ">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-            <path fill="#0187a2" d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zM272 192H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H272c-8.8 0-16-7.2-16-16s7.2-16 16-16zM256 304c0-8.8 7.2-16 16-16H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H272c-8.8 0-16-7.2-16-16zM164 152v13.9c7.5 1.2 14.6 2.9 21.1 4.7c10.7 2.8 17 13.8 14.2 24.5s-13.8 17-24.5 14.2c-11-2.9-21.6-5-31.2-5.2c-7.9-.1-16 1.8-21.5 5c-4.8 2.8-6.2 5.6-6.2 9.3c0 1.8 .1 3.5 5.3 6.7c6.3 3.8 15.5 6.7 28.3 10.5l.7 .2c11.2 3.4 25.6 7.7 37.1 15c12.9 8.1 24.3 21.3 24.6 41.6c.3 20.9-10.5 36.1-24.8 45c-7.2 4.5-15.2 7.3-23.2 9V360c0 11-9 20-20 20s-20-9-20-20V345.4c-10.3-2.2-20-5.5-28.2-8.4l0 0 0 0c-2.1-.7-4.1-1.4-6.1-2.1c-10.5-3.5-16.1-14.8-12.6-25.3s14.8-16.1 25.3-12.6c2.5 .8 4.9 1.7 7.2 2.4c13.6 4.6 24 8.1 35.1 8.5c8.6 .3 16.5-1.6 21.4-4.7c4.1-2.5 6-5.5 5.9-10.5c0-2.9-.8-5-5.9-8.2c-6.3-4-15.4-6.9-28-10.7l-1.7-.5c-10.9-3.3-24.6-7.4-35.6-14c-12.7-7.7-24.6-20.5-24.7-40.7c-.1-21.1 11.8-35.7 25.8-43.9c6.9-4.1 14.5-6.8 22.2-8.5V152c0-11 9-20 20-20s20 9 20 20z" />
-          </svg>
-        <p class="block text-gray-700 text-sm font-bold mb-2 mx-2"> Rp. <?php echo number_format($d['nominal'], 0, ',', '.'); ?></p>
-        </div>
-      <?php
-      }
+      <div class="d-flex justify-content-start mx-lg-2 mx-3 ">
+        <svg xmlns="http://www.w3.org/2000/svg" height="30" width="28" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path fill="#0187a2" d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zM272 192H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H272c-8.8 0-16-7.2-16-16s7.2-16 16-16zM256 304c0-8.8 7.2-16 16-16H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H272c-8.8 0-16-7.2-16-16zM164 152v13.9c7.5 1.2 14.6 2.9 21.1 4.7c10.7 2.8 17 13.8 14.2 24.5s-13.8 17-24.5 14.2c-11-2.9-21.6-5-31.2-5.2c-7.9-.1-16 1.8-21.5 5c-4.8 2.8-6.2 5.6-6.2 9.3c0 1.8 .1 3.5 5.3 6.7c6.3 3.8 15.5 6.7 28.3 10.5l.7 .2c11.2 3.4 25.6 7.7 37.1 15c12.9 8.1 24.3 21.3 24.6 41.6c.3 20.9-10.5 36.1-24.8 45c-7.2 4.5-15.2 7.3-23.2 9V360c0 11-9 20-20 20s-20-9-20-20V345.4c-10.3-2.2-20-5.5-28.2-8.4l0 0 0 0c-2.1-.7-4.1-1.4-6.1-2.1c-10.5-3.5-16.1-14.8-12.6-25.3s14.8-16.1 25.3-12.6c2.5 .8 4.9 1.7 7.2 2.4c13.6 4.6 24 8.1 35.1 8.5c8.6 .3 16.5-1.6 21.4-4.7c4.1-2.5 6-5.5 5.9-10.5c0-2.9-.8-5-5.9-8.2c-6.3-4-15.4-6.9-28-10.7l-1.7-.5c-10.9-3.3-24.6-7.4-35.6-14c-12.7-7.7-24.6-20.5-24.7-40.7c-.1-21.1 11.8-35.7 25.8-43.9c6.9-4.1 14.5-6.8 22.2-8.5V152c0-11 9-20 20-20s20 9 20 20z" />
+        </svg>
+        <p class="block text-gray-700 fs-5 font-bold text-info-emphasis  mb-2 mx-2"> Rp. <?php echo number_format($row["nominal"], 0, ',', '.'); ?></p>
+      </div>
+    <?php
+
     } else {
-      // Tampilkan logo uang dan nominal = 0 jika tidak ada data saldo
-      ?>
+
+    ?>
       <div class="d-flex justify-content-end mx-3">
         <svg xmlns="http://www.w3.org/2000/svg" height="26" width="28" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
           <path fill="#0187a2" d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zM272 192H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H272c-8.8 0-16-7.2-16-16s7.2-16 16-16zM256 304c0-8.8 7.2-16 16-16H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H272c-8.8 0-16-7.2-16-16zM164 152v13.9c7.5 1.2 14.6 2.9 21.1 4.7c10.7 2.8 17 13.8 14.2 24.5s-13.8 17-24.5 14.2c-11-2.9-21.6-5-31.2-5.2c-7.9-.1-16 1.8-21.5 5c-4.8 2.8-6.2 5.6-6.2 9.3c0 1.8 .1 3.5 5.3 6.7c6.3 3.8 15.5 6.7 28.3 10.5l.7 .2c11.2 3.4 25.6 7.7 37.1 15c12.9 8.1 24.3 21.3 24.6 41.6c.3 20.9-10.5 36.1-24.8 45c-7.2 4.5-15.2 7.3-23.2 9V360c0 11-9 20-20 20s-20-9-20-20V345.4c-10.3-2.2-20-5.5-28.2-8.4l0 0 0 0c-2.1-.7-4.1-1.4-6.1-2.1c-10.5-3.5-16.1-14.8-12.6-25.3s14.8-16.1 25.3-12.6c2.5 .8 4.9 1.7 7.2 2.4c13.6 4.6 24 8.1 35.1 8.5c8.6 .3 16.5-1.6 21.4-4.7c4.1-2.5 6-5.5 5.9-10.5c0-2.9-.8-5-5.9-8.2c-6.3-4-15.4-6.9-28-10.7l-1.7-.5c-10.9-3.3-24.6-7.4-35.6-14c-12.7-7.7-24.6-20.5-24.7-40.7c-.1-21.1 11.8-35.7 25.8-43.9c6.9-4.1 14.5-6.8 22.2-8.5V152c0-11 9-20 20-20s20 9 20 20z" />
@@ -348,7 +343,7 @@ if (isset($_SESSION['id_saldo'])) {
             </h6>
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="landingpage.php">
                   <svg class="bi">
                     <use xlink:href="#house-fill" />
                   </svg>
@@ -372,7 +367,7 @@ if (isset($_SESSION['id_saldo'])) {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="transaksi.php">
                   <svg class="bi">
                     <use xlink:href="#people" />
                   </svg>
@@ -380,7 +375,7 @@ if (isset($_SESSION['id_saldo'])) {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="laporan.php">
                   <svg class="bi">
                     <use xlink:href="#graph-up" />
                   </svg>
@@ -405,7 +400,7 @@ if (isset($_SESSION['id_saldo'])) {
             <hr class="my-3" />
             <ul class="nav flex-column mb-auto">
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="setting.php">
                   <svg class="bi">
                     <use xlink:href="#gear-wide-connected" />
                   </svg>
@@ -413,31 +408,45 @@ if (isset($_SESSION['id_saldo'])) {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="logout.php">
+                <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                   <svg class="bi">
                     <use xlink:href="#door-closed" />
                   </svg>
                   Log out
-                </a>
+                </button>
               </li>
             </ul>
           </div>
         </div>
       </div>
 
-  
-    
-    <!--script lokal bawaaan bootsrap-->
-    <script src="../kelompok/js/bootstrap.bundle.min.js"></script>
+      <!--moda konfirmasi log out-->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-danger-subtle ">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Yakin Ingin Log Our</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Anda Akan Keluar Dari Aplikasi
+            </div>
+            <div class="modal-footer ">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+              <a href="logout.php"><button type="button" class="btn btn-outline-danger">Keluar</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <!--script khusus side dan navbar -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
-      integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../kelompok/js/dashboard.js"></script>
-   
+
+      <!--script lokal bawaaan bootsrap-->
+      <script src="../kelompok/js/bootstrap.bundle.min.js"></script>
+
+      <!--script khusus side dan navbar -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
+      <script src="../kelompok/js/dashboard.js"></script>
+
 </body>
 
 </html>

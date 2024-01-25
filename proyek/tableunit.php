@@ -48,7 +48,6 @@ include "warifheader.php"
   }
 
   ?>
-
   <div class="container mt-4 ">
     <h4 class=" mb-3">WARIF UNIT MANAJEMEN</h4>
     <div class="card mb-4">
@@ -60,7 +59,6 @@ include "warifheader.php"
         </p>
       </div>
     </div>
-
     <!--table unit-->
     <h4 class="mb-4">Table Unit</h4>
     <div class="card mb-5">
@@ -76,221 +74,151 @@ include "warifheader.php"
       </div>
       <!-- Tabel CRUD -->
       <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive text-center ">
           <table class="table align-middle table-bordered table-hover rounded ">
             <thead class="table-warning">
-
               <tr>
-                <th scope="col">id</th>
-                <th scope="col">Nama Unit</th>
-                <th scope="col">Tanggal Beli</th>
-                <th scope="col">Harga Beli</th>
-                <th scope="col">Harga Jual</th>
-                <th scope="col">Vendor</th>
-                <th scope="col">Foto Unit</th>
-                <th scope="col">Tahun Produksi</th>
-                <th class="col-sm-3 col-md-2">Action</th>
+                <th scope="col-sm-3 col-md-2">Unit</th>
+                <th scope="col-sm-3 col-md-2">Tanggal Beli</th>
+                <th scope="col-sm-3 col-md-2">Harga Beli</th>
+                <th scope="col-sm-3 col-md-2">Jumlah</th>
+                <th scope="col-sm-3 col-md-2">Harga Jual</th>
+                <th scope="col-sm-3 col-md-2">Vendor</th>
+                <th scope="col-sm-3 col-md-2">Foto Unit</th>
+                <th scope="col-sm-3 col-md-2">Produksi</th>
+                <th scope="col-sm-3 col-md-2">Action</th>
               </tr>
-
             </thead>
             <tbody>
               <?php
               include "koneksi.php";
 
-              $no = 1;
-              $query = mysqli_query($koneksi, "SELECT * FROM aset where id_aset");
+              $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.jumlah_beli,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '" . $_SESSION["idadmin"] . "';");
 
               while ($d = mysqli_fetch_array($query)) {
+
               ?>
-                <form method="post" action="edit_harga.php">
-                  <tr>
-                   <input type="hidden" name="id_aset" value="<?php echo $d['id_aset']; ?>">
-                    <th scope="row"><?php echo $d['id_aset'] ?></th>
-                    <td><?php echo $d['nama_unit'] ?></td>
-                    <td><?php echo $d['tanggal_beli'] ?></td>
-                    <td><?php echo $d['harga_beli'] ?></td>
-
-                    <td><?php echo $d['harga_jual'] ?></td>
-                    <td><?php echo $d['vendor'] ?></td>
+                <tr>
+                  <p class="visually-hidden "><?php echo $d['id'] ?></p>
+                  <td><?php echo $d['nama'] ?></td>
+                  <td><?php echo $d['tanggal_beli'] ?></td>
+                  <td>RP. <?php echo number_format($d['harga'], 0, ',', '.'); ?></td>
+                  <td><?php echo $d["jumlah_beli"] ?></td>
+                  <td>RP. <?php echo number_format($d['harga_jual'], 0, ',', '.'); ?></td>
+                  <td><?php echo $d['vendor'] ?></td>
+                  <td><img src="<?php echo $d["foto"]; ?>" alt="Foto Unit" class="image-container " height="100px" width="190px"></td>
+                  <td><?php echo $d['tahun_produksi'] ?></td>
+                  <td>
                     <?php
-                    // Mendapatkan data blob dari database
-                    $blobData = $d['foto_truk'];
-                    // Mengonversi blob data ke base64
-                    $imageData = base64_encode($blobData);
-                    // Membuat URL gambar
-                    $imageSrc = 'data:image/jpeg;base64,' . $imageData;
-
+                    if (isset($_GET['idaset']) && $_GET["idaset"] == $d["id"]) {
+                      $idaset = $_GET["idaset"]
                     ?>
-                    <style>
-                      .image-container {
-                        width: 200px;
-                        height: 100px;
-                        background-size: cover;
-                        /* Set background gambar dengan menggunakan data base64 langsung */
-                        background-image: url('<?php echo $imageSrc; ?>');
-                      }
-                    </style>
-                    <td><img src="<?php echo $imageSrc; ?>" alt="Foto Unit" class="image-container "></td>
-
-                    <td><?php echo $d['tahun_produksi'] ?></td>
-                    <td class="d-sm-inline-flex gap-sm-2">
-                      <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editharga">Edit Harga Jual</button>
-                      <button type="button" class="btn btn-sm btn-info">Jual Unit</button>
-                    </td>
-                  </tr>
-
-                  <!--modal-->
-                  <div class="modal fade" id="editharga" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Atur Harga Jual</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <form method="post" action="edit_harga.php?idaset=<?php echo $idaset ?>">
+                        <div class="m-2">
+                          <label for="harga_jual" class="form-label"></label>
+                          <input type="number" class="form-control" name="harga_jual" id="harga_jual" required>
                         </div>
-                        <div class="modal-body">
-                          <div class="">
-                            <label for="validationDefault03" class="form-label">Masukan Harga Jual</label>
-                            <input type="text" class="form-control" name="harga_jual" required>
-                          </div>
+
+                        <div class="m-2">
+                          <button type="submit" class="btn btn-primary ">Edit</button>
+                          <button type="button" class="btn btn-danger " data-bs-dismiss="modal" onclick="window.location.href='tableunit.php'">Batal</button>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                          <button type="submit" class="btn btn-primary">Tetapkan Harga Jual</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              <?php } ?>
-            </tbody>
-          </table>
+                      </form>
         </div>
+      <?php } else { ?>
+        <div class="d-flex flex-column">
+          <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='tableunit.php?idaset=<?php echo $d['id'] ?>'">Edit Harga</button>
+          <a href="jual_unit.php?idaset=<?php echo $d['id'] ?>"><button type="button" class="btn btn-sm btn-info mt-2 ">Jual Unit</button></a>
+        </div>
+      <?php } ?>
+      </td>
+      </tr>
+    <?php } ?>
+    </tbody>
+    </table>
       </div>
     </div>
+  </div>
 
-    <!--klaim unit-->
-    <div class="card text-center mb-5">
-      <div class="card-header">
-        <h5 class="card-title text-success ">Klaim Dan Dan Bayar Unit</h5>
-      </div>
-      <div class="card-body">
 
-        <?php
-        include "koneksi.php";
-
-        $query = mysqli_query($koneksi, "SELECT * FROM pembelian where id_pembelian");
-
-        $sudahbayar = false;
-
-        if (mysqli_num_rows($query) > 0) {
-
-          while ($d = mysqli_fetch_array($query)) {
-
-            $id_pembelian = $d['id_pembelian'];
-
-            // Cek apakah unit dengan id_pembelian tertentu sudah dibayar
-            $queryPembayaran = mysqli_query($koneksi, "SELECT * FROM pembayaran WHERE id_pembelian = '$id_pembelian'");
-            $belumbayar = mysqli_num_rows($queryPembayaran) > 0;
-
-            // Tampilkan formulir hanya jika belum dibayar
-            if (!$belumbayar) {
-        ?>
-              <form method="post" action="klaimunit.php">
-                <div class="container d-flex mb-4" id="formContainer">
-                  <div class="card text-start " style="width: 88rem;">
-                    <button type="button" class="btn-close mx-2" aria-label="Close"></button>
-                    <ul class="list-group list-group-flush">
-
-                      <li class="list-group-item visually-hidden"><?php echo $d['id_pembelian'] ?></li>
-                      <li class="list-group-item">Pembelian Atas Nama : <?php echo $d['atas_nama'] ?></li>
-                      <li class="list-group-item">Tanggal Beli : <?php echo $d['tanggal_beli'] ?></li>
-                      <li class="list-group-item">Unit Yang Di Beli : <?php echo $d['nama_truk'] ?></li>
-                      <li class="list-group-item">Jumlah beli : <?php echo $d['jumlah_beli'] ?></li>
-                      <li class="list-group-item">Harga : Rp. <?php echo number_format($d['harga_truk'], 0, ',', '.') ?></li>
-                      <li class="list-group-item">Total Harga : Rp. <?php echo number_format($d['total_harga'], 0, ',', '.') ?></li>
-                      <li class="list-group-item">
-                        <input type="hidden" class="form-control" name="id_pembelian" value="<?php echo $d['id_pembelian'] ?>">
-                        <input type="hidden" class="form-control" name="jumlah_beli" value="<?php echo $d['jumlah_beli'] ?>">
-                        <input type="hidden" class="form-control" name="harga_truk" value="<?php echo $d['harga_truk'] ?>">
-                        <input type="hidden" class="form-control" name="total_harga" value="<?php echo $d['total_harga'] ?>">
-                        <input type="hidden" class="form-control" name="email_pembeli" value="<?php echo $d['email_pembeli'] ?>">
-                        <input type="hidden" class="form-control" name="vendor" value="<?php echo $d['vendor'] ?>">
-                        <?php
-                        // Mendapatkan data blob dari database
-                        $blobData = $d['foto_truk'];
-                        // Mengonversi blob data ke base64
-                        $imageData = base64_encode($blobData);
-                        // Membuat URL gambar
-                        $imageSrc = 'data:image/jpeg;base64,' . $imageData;
-                        ?>
-
-                        <input type="hidden" value="<?php echo $imageSrc; ?>" name="foto_truk">
-
-                        <input type="hidden" class="form-control" name="tahun_produksi" value="<?php echo $d['tahun_produksi'] ?>">
-                        <div class="d-grid gap-2">
-                          <button class="btn btn-info btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#konfirmasi">Unit Di Terima</button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <!-- Modal Konfirmasi-->
-                <div class="modal fade" id="konfirmasi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header bg-info-subtle ">
-                        <h1 class="modal-title fs-5 " id="exampleModalLabel">Konfirmasi</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p class="fw-semibold">Konfirmasi Masih Unit Di Terima Dan Bayar ? saldo akan di tarik sesuai total harga beli</p>
-                      </div>
-                      <div class="modal-footer bg-info-subtle">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-info">Ya </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-          <?php
-              $sudahbayar = true;
-            }
-          }
-        }
-        if (!$sudahbayar) {
-          ?>
-          <div class="card">
+  <!--klaim unit-->
+  <div class="card text-center mb-5">
+    <div class="card-header">
+      <h5 class="card-title text-success ">Klaim Dan Bayar Unit</h5>
+    </div>
+    <div class="card-body d-flex justify-content-center flex-wrap gap-5">
+      <?php
+      include "koneksi.php";
+      $query = mysqli_query($koneksi, " SELECT truk.foto, truk.nama, pembelian.jumlah_beli, pembelian.total_bayar,pembelian.id,truk.id AS idtruk
+                from pembelian
+                join truk on pembelian.truk = truk.id
+                join admin on pembelian.owner = admin.id
+                where admin.id = '" . $_SESSION["idadmin"] . "' AND pembelian.klaim = 0; 
+               ");
+      if (mysqli_num_rows($query) != 0) {
+        while ($e = mysqli_fetch_array($query)) {
+      ?>
+          <div class="card" style="width: 38rem;">
+            <img src="<?php echo $e["foto"]; ?>" class="card-img-top" alt="truk foto">
             <div class="card-body">
-              data masih kosong, data pembelian akan muncul setelah melakukan pembelian unit.
+              <h5 class="card-title"><?php echo $e["nama"]; ?></h5>
+              <p>Jumlah Beli <?php echo $e["jumlah_beli"]; ?></p>
+              <p class="card-text">RP. <?php echo number_format($e['total_bayar'], 0, ',', '.'); ?></p>
+              <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Klaim Dan Bayar Unit</button>
+             
+              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Danger</button>
             </div>
           </div>
 
-        <?php  } ?>
-      </div>
-      <div class="card-footer text-body-secondary">
-        Warif Corporation
-      </div>
-    </div>
+          <!--modal konfirmasi klaim-->
+          <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-info-subtle">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Konfirmasi Unit DI Terima</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Saldo Anda Akan Di Tarik Sesuai Jumlah Total Bayar
+                </div>
+                <div class="modal-footer bg-info-subtle ">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                  <a href="klaimunit.php?buyid=<?php echo $e["id"]; ?>&trukid=<?php echo $e["idtruk"]; ?>" class="btn btn-outline-info">Klaim Unit</a>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <!--modal batal klaim-->
+          <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-danger-subtle">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Batal Klaim Unit</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Pembelian Akan Di Batalkan 
+                </div>
+                <div class="modal-footer bg-danger-subtle ">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <a href="batalklaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-outline-danger">Batal Klaim</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      <?php
+
+        }
+      } else {
+        echo "<h2 class='text-success-emphasis fw-light '>Data Pembelian Akan Tampil Setelah Anda Membeli Unit</h2>";
+      }
+      ?>
+    </div>
+    <div class="card-footer text-body-secondary">
+      Warif Corporation
+    </div>
   </div>
-
-  <!-- Modal Tambah Unit -->
-  <div class="modal fade" id="tambahUnitModal" tabindex="-1" aria-labelledby="tambahUnitModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="tambahUnitModalLabel">Tambah Unit Kontainer</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Tambah</button>
-        </div>
-      </div>
-    </div>
   </div>
 </main>
 
