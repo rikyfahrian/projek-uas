@@ -79,9 +79,9 @@ include "warifheader.php"
               <tr>
                 <th scope="col-sm-3 col-md-2">Unit</th>
                 <th scope="col-sm-3 col-md-2">Tanggal Beli</th>
-                <th scope="col-sm-3 col-md-2">Harga Beli</th>
+                <th scope="col-sm-3 col-md-2">Harga Beli/unit</th>
                 <th scope="col-sm-3 col-md-2">Jumlah</th>
-                <th scope="col-sm-3 col-md-2">Harga Jual</th>
+                <th scope="col-sm-3 col-md-2">Harga Jual/unit</th>
                 <th scope="col-sm-3 col-md-2">Vendor</th>
                 <th scope="col-sm-3 col-md-2">Foto Unit</th>
                 <th scope="col-sm-3 col-md-2">Produksi</th>
@@ -92,7 +92,7 @@ include "warifheader.php"
               <?php
               include "koneksi.php";
 
-              $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.jumlah_beli,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '" . $_SESSION["idadmin"] . "';");
+              $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.jumlah_beli,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi,pembelian.id AS idpembelian FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '" . $_SESSION["idadmin"] . "';");
 
               while ($d = mysqli_fetch_array($query)) {
 
@@ -127,7 +127,7 @@ include "warifheader.php"
       <?php } else { ?>
         <div class="d-flex flex-column">
           <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='tableunit.php?idaset=<?php echo $d['id'] ?>'">Edit Harga</button>
-          <a href="jual_unit.php?idaset=<?php echo $d['id'] ?>"><button type="button" class="btn btn-sm btn-info mt-2 ">Jual Unit</button></a>
+          <a href="jual_unit.php?idaset=<?php echo $d['id'] ?>&idpembelian=<?php echo $d['idpembelian'] ?>"><button type="button" class="btn btn-sm btn-info mt-2 ">Jual Unit</button></a>
         </div>
       <?php } ?>
       </td>
@@ -165,7 +165,7 @@ include "warifheader.php"
               <p class="card-text">RP. <?php echo number_format($e['total_bayar'], 0, ',', '.'); ?></p>
               <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Klaim Dan Bayar Unit</button>
              
-              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Danger</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Batal</button>
             </div>
           </div>
 
@@ -218,7 +218,7 @@ include "warifheader.php"
       Warif Corporation
     </div>
   </div>
-  </div>
+  
 </main>
 
 

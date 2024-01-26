@@ -117,6 +117,7 @@
 
 
     <main>
+    <form  method="post" action="registeraksi.php">
         <div class="b-example-divider"></div>
         <div class="container col-xl-10 col-xxl-8 px-4 py-5 ">
         <a href="loginpage.php"><button type="button" class="btn btn-outline-info">Kembali Ke Halaman Login</button></a>
@@ -127,7 +128,7 @@
                     <img src="../image/bg-truk3.jpg" class="img-fluid rounded " alt="...">
                 </div>
                 <div class="col-md-10 mx-auto col-lg-6">
-                    <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                    <!-- <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post" action="registeraksi.php"> -->
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="nama" placeholder="name@example.com" required>
                             <label for="floatingInput">Nama</label>
@@ -145,11 +146,11 @@
                             <label for="floatingPassword">No Hp</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" name="alamat" placeholder="name@example.com" required>
+                            <input type="text" class="form-control" name="alamat" placeholder="name@example.com" required>
                             <label for="floatingInput">Alamat</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" name="perusahaan" placeholder="name@example.com" required>
+                            <input type="text" class="form-control" name="perusahaan" placeholder="name@example.com" required>
                             <label for="floatingInput">Nama Perusahaan</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -157,7 +158,7 @@
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="file" class="form-control" name="foto" placeholder="Password" required>
+                            <input type="file" class="form-control" name="foto" placeholder="Password" >
                             <label for="floatingPassword">Upload Foto Anda</label>
                         </div>
 
@@ -211,7 +212,7 @@
 
 
                     <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content  ">
                                 <div class="modal-header bg-info-subtle">
@@ -223,17 +224,17 @@
                                 </div>
                                 <div class="modal-footer bg-info-subtle">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Urungkan</button>
-                                    <button type="button" class="btn btn-info">Ya, Buat Akun</button>
+                                    <input type="submit" class="btn btn-info" value="Lanjutkan">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    </form>
+                    </div> -->
+                    
                 </div>
             </div>
         </div>
 
-        <div class="b-example-divider mb-0"></div>
+        </form>
     </main>
     <script src="../kelompok/js/bootstrap.min.js"></script>
 

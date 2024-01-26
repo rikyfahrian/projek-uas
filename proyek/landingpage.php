@@ -12,12 +12,21 @@ include "warifheader.php";
         <div class="card mb-3 bg-info-subtle " style="max-width: 740px;">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="../image/alif.jpg" class="img-fluid rounded-start" alt="..." >
+              <?php 
+              include "koneksi.php";
+              $idAdmin = $_SESSION["idadmin"];
+
+              $query = mysqli_query($koneksi,"SELECT foto,nama FROM admin WHERE id = '$idAdmin'");
+              while ($e = mysqli_fetch_array($query)) {
+              
+              ?>
+              "<img src='<?php echo $e["foto"]?>' class='img-fluid rounded-start' alt='alifkontol' >
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">(Nama Pengguna)</h5>
-                <p class="card-text">Selamat datang [nama pengguna],ini adalah halaman dashboard, dapatkan informasi dari aktivitas anda di halaman ini.</p>
+                <h5 class="card-title"><?php echo $e["nama"]?></h5>
+                <p class="card-text">Selamat datang <?php echo $e["nama"]?>,ini adalah halaman dashboard, dapatkan informasi dari aktivitas anda di halaman ini.</p>
+             <?php } ?>
               </div>
             </div>
           </div>
@@ -30,7 +39,7 @@ include "warifheader.php";
           <div class="row g-0">
             <div class="col-md-8">
               <div class="card-body">
-                <a class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="atursaldo.php">
+                <a class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="saldo.php">
                   <h5 class="card-title">Informasi Saldo</h5>
                 </a>
                 <p class="card-text mb-3">Kini anda juga bisa melakukan top up saldo dengan minimal deposit sebesar Rp.10.000.000, Dan beli unit lebih banyak pada aplikasi kami</p>
