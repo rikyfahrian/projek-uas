@@ -30,6 +30,9 @@ try {
 } catch (Exception $e) {
     
     echo "Terjadi kesalahan: " . $e->getMessage();
+}finally {
+    mysqli_close($koneksi);
+
 }
 
 ?>

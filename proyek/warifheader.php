@@ -304,6 +304,7 @@ session_start();
         <p class="block text-gray-700 fs-5 font-bold text-info-emphasis  mb-2 mx-2"> Rp. <?php echo number_format($row["nominal"], 0, ',', '.'); ?></p>
       </div>
     <?php
+        mysqli_close($koneksi);
 
     } else {
 

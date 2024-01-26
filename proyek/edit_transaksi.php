@@ -58,7 +58,9 @@ include "warifheader.php";
                         </div>
                     </form>
                 <?php
-                } ?>
+                } 
+                mysqli_close($koneksi);
+                ?>
             </div>
             <div class="card-footer text-body-secondary">
                 Warif Corporation

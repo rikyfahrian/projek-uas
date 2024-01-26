@@ -146,6 +146,8 @@ include "warifheader.php";
               </div>
 
             <?php
+                    mysqli_close($koneksi);
+
           }
         } else {
           // Jika tidak ada data saldo (user belum membuat saldo)
@@ -196,22 +198,6 @@ include "warifheader.php";
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-      </div>
-    </main>
-  
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const toastLiveExample = new bootstrap.Toast(document.getElementById('liveToast'), {
-          delay: 5000
-        });
-        toastLiveExample.show();
-      });
-    </script>
-
-
-=======
 
           <?php
         }
@@ -274,7 +260,10 @@ include "warifheader.php";
                     <button type="submit" class="btn btn-info">Update</button>
                   </div>
                   </form>
-                <?php } ?>
+                <?php } 
+                
+                mysqli_close($koneksi);
+                ?>
                 </div>
               </div>
             </div>
@@ -292,4 +281,3 @@ include "warifheader.php";
     toastLiveExample.show();
   });
 </script>
->>>>>>> 5fd4044da3eafb9aebb0b29b6bfa8ad2bc69b817

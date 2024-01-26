@@ -17,13 +17,15 @@ include "warifheader.php";
 
               $query = mysqli_query($koneksi,"SELECT foto,nama FROM admin WHERE id = '$idAdmin'");
               while ($e = mysqli_fetch_array($query)) {
-              
+                echo "<img src='../image/".$e['foto']."' />";
               ?>
             <div class="col-md-8">
               <div class="card-body">
                 <h5 class="card-title">Halo <?php echo $e["nama"]?></h5>
                 <p class="card-text">Selamat datang ,ini adalah halaman dashboard, dapatkan informasi dari aktivitas anda di halaman ini, untuk info lebih lanjut baca dokumentasi aplikasi.</p>
-             <?php } ?>
+             <?php } 
+                    mysqli_close($koneksi);
+                    ?>
               </div>
             </div>
           </div>

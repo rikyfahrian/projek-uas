@@ -36,10 +36,17 @@ try {
             echo "Error: " . mysqli_error($koneksi);
         }
     } else {
+
+
         // Jika saldo tidak mencukupi.
         header("Location: beli_unit.php?id_truk=$id_truk&status=error");
         exit();
     }
 } catch (Exception $e) {
     echo $e->getMessage();
-}
+
+
+}finally {
+    mysqli_close($koneksi);
+    }
+

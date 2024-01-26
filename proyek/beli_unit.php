@@ -81,7 +81,9 @@ include "warifheader.php";
                             <p class="card-text  text-md-start fw-semibold  mb-2">Tahun Produksi : <?php echo $d['tahun_produksi']; ?></p>
                         </div>
                     </div>
-                <?php } ?>
+                <?php }
+                    mysqli_close($koneksi);
+                    ?>
             </div>
             <div class="col">
                 <div class="card">
@@ -153,7 +155,11 @@ include "warifheader.php";
                                     </div>
                                 </div>
                             </form>
-                        <?php } ?>
+                        <?php }
+                        
+               
+                            mysqli_close($koneksi);
+                            ?>
                     </div>
                 </div>
 

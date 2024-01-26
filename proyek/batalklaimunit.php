@@ -17,4 +17,6 @@ try {
 
 }catch(Exception $e) {
     echo $e->getMessage();
-}
+}finally {
+    mysqli_close($koneksi);
+    }

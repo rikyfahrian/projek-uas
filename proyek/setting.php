@@ -26,20 +26,17 @@ include "warifheader.php";
                         Ganti Password
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form method="post" action="updateakun.php">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Password lama</label>
-                                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="passwordlama">
 
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password Baru</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <input type="password" class="form-control" id="exampleInputPassword1" name="passwordbaru">
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Saya Telah Membaca Ketentuan dan Kebijakan</label>
-                            </div>
+                        
                             <button type="submit" class="btn btn-info">Ganti Password</button>
                         </form>
                     </div>

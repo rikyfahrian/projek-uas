@@ -89,3 +89,5 @@ if (isset($_GET['id'])) {
     header("Location: table_uniti.php");
     exit();
 }
+
+mysqli_close($koneksi);

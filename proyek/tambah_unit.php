@@ -36,7 +36,9 @@ include "warifheader.php"
           </div>
         </div>
         
-      <?php } ?>
+      <?php } 
+        mysqli_close($koneksi);
+        ?>
 
     </div>
 </main>

@@ -20,5 +20,7 @@ if (isset($_GET['id'])) {
     // If the status is not 'SUKSES', handle accordingly (e.g., show an error message)
     echo "Cannot delete the transaction with status 'BLUM BAYAR'";
   }
+  mysqli_close($koneksi);
+
 }
 ?>

@@ -145,7 +145,9 @@ if (isset($_GET['status_edit'])) {
                       </td>
                     </tr>
                 <?php }
-                } ?>
+                } 
+        mysqli_close($koneksi);
+        ?>
               </tbody>
             </table>
           </div>
@@ -193,6 +195,8 @@ if (isset($_GET['status_edit'])) {
         <?php
 
           }
+        mysqli_close($koneksi);
+
         } else {
           echo "<h2 class='text-success-emphasis fw-light '>Data Akan Muncul Setelah Ada Customer Yang Membeli Unit</h2>";
         }

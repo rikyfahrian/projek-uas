@@ -41,8 +41,9 @@ try {
     mysqli_rollback($koneksi);
 
     echo "Transaksi gagal: " . $e->getMessage();
-}
+}finally {
 
 // Tutup koneksi
 mysqli_close($koneksi);
+}
 ?>

@@ -3,16 +3,6 @@
 include "warifheader.php";
 
 
-// Check if a session is not already started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Retrieve total profit from session
-$totalProfit = isset($_SESSION['total_profit']) ? $_SESSION['total_profit'] : 0;
-$totalUnits = isset($_SESSION['total_units']) ? $_SESSION['total_units'] : 0;
-$totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
-
 ?>
 
 
@@ -48,11 +38,16 @@ $totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
                     </div>
                     <div class="container-fluid py-5">
                         <?php
-                        if ($totalProfit > 0) {
-                        ?>
-                            <h1 class="display-5 fw-bold text-success ">Total Profit Anda Saat Ini</h1>
-                            <p class="col-md-8 fs-3 text-success fw-semibold "><strong>+</strong> Rp.<?php echo number_format($totalProfit, 0, ',', '.'); ?></p>
-                        <?php } else {
+                            $idAdmin = $_SESSION["idadmin"];
+                            $query = mysqli_query($koneksi,"SELECT SUM(total_harga) as total FROM penjualan WHERE owner = '$idAdmin' AND status_bayar = true");
+                            $total = mysqli_fetch_assoc($query)["total"];
+
+                        if ($total > 0) {
+                   
+                             echo "<h1 class='display-5 fw-bold text-success '>Total Profit Anda Saat Ini</h1>";
+                           
+                             echo  "<p class='col-md-8 fs-3 text-success fw-semibold '><strong>+</strong> Rp. ". number_format($total, 0, ',', '.') ."</p>";
+                         } else {
                         ?>
                             <div class="container-fluid">
                                 <h1 class="display-5 fw-bold text-success ">Belum Ada Profit</h1>
@@ -73,6 +68,8 @@ $totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
 
             <?php
         }
+        mysqli_close($koneksi);
+
             ?>
 
 
@@ -83,14 +80,33 @@ $totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
             <div class="row align-items-md-stretch">
                 <div class="col-md-6">
                     <div class="h-100 p-5 bg-body-tertiary rounded-3">
-                        <h1 class="display-6 text-info-emphasis fw-bold ">Total Unit Yang Di Beli </h1>
-                        <h1 class="display-6 fw-bold text-info-emphasis "><?php echo $totalUnits ?> Unit</h1>
+                        <h1 class="display-6 text-info-emphasis fw-bold ">Total Unit Yang Di Miliki </h1>
+                        <?php 
+                        include "koneksi.php";
+
+                        $idAdmin = $_SESSION["idadmin"];
+                        $query = mysqli_query($koneksi,"SELECT SUM(jumlah_beli) as total FROM pembelian WHERE owner = '$idAdmin' AND klaim = true");
+                        $total = mysqli_fetch_assoc($query)["total"];
+                        echo "<h1 class='display-6 fw-bold text-info-emphasis '>$total Unit</h1>";
+                    mysqli_close($koneksi);
+
+                        ?>
+                        
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="h-100 p-5 bg-body-tertiary rounded-3">
                         <h1 class="display-6  fw-bold text-success ">Total Unit Yang Terjual </h1>
-                        <h1 class="display-6 fw-bold text-success"><?php echo $totaljual ?> Unit</h1>
+                        <?php 
+                        include "koneksi.php";
+
+                        $idAdmin = $_SESSION["idadmin"];
+                        $query = mysqli_query($koneksi,"SELECT SUM(jumlah_beli) as total FROM penjualan WHERE owner = '$idAdmin'  AND status_bayar = true");
+                        $total = mysqli_fetch_assoc($query)["total"];
+                        echo "<h1 class='display-6 fw-bold text-info-emphasis '>$total Unit</h1>";
+                    mysqli_close($koneksi);
+
+                        ?>
                     </div>
                 </div>
             </div>
@@ -121,10 +137,10 @@ $totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
                                 <?php
                                 include "koneksi.php";
                                 $query = mysqli_query($koneksi, " SELECT penjualan.id,penjualan.status_bayar, penjualan.nama_customer, truk.nama AS nama_truk, penjualan.alamat, penjualan.no_hp ,penjualan.jumlah_beli,penjualan.tanggal_transaksi, penjualan.bank, penjualan.no_rek, penjualan.total_harga
-                from penjualan
-                join truk on penjualan.truk = truk.id
-                where penjualan.owner = '" . $_SESSION["idadmin"] . "'; 
-               ");
+                                    from penjualan
+                                    join truk on penjualan.truk = truk.id
+                                    where penjualan.owner = '" . $_SESSION["idadmin"] . "'; 
+                                ");
                                 if (mysqli_num_rows($query) != 0) {
                                     while ($e = mysqli_fetch_array($query)) {
                                 ?>
@@ -144,7 +160,10 @@ $totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
                                             <td class="text-warning-emphasis "><?php echo ($e["status_bayar"]) ? "LUNAS" :  "BLUM BAYAR"; ?></td>
                                         </tr>
                                 <?php }
-                                } ?>
+                                } 
+                                
+                    mysqli_close($koneksi);
+                    ?>
                             </tbody>
                         </table>
                     </div>

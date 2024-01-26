@@ -117,7 +117,7 @@
 
 
     <main>
-    <form  method="post" action="registeraksi.php">
+    <form  method="post" action="registeraksi.php" enctype="multipart/form-data">
         <div class="b-example-divider"></div>
         <div class="container col-xl-10 col-xxl-8 px-4 py-5 ">
         <a href="loginpage.php"><button type="button" class="btn btn-outline-info">Kembali Ke Halaman Login</button></a>
@@ -158,7 +158,7 @@
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="file" class="form-control" name="foto" placeholder="Password" >
+                            <input type="file" class="form-control" name="foto"  >
                             <label for="floatingPassword">Upload Foto Anda</label>
                         </div>
 

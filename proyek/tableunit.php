@@ -175,6 +175,8 @@ include "warifheader.php"
       </tr>
     <?php 
   } 
+  mysqli_close($koneksi);
+
    ?>
     </tbody>
     </table>
@@ -211,6 +213,7 @@ include "warifheader.php"
             </div>
           </div>
       <?php
+                    mysqli_close($koneksi);
 
         }
       } else {

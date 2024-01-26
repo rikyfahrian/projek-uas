@@ -65,7 +65,9 @@ include "warifheader.php";
                                         <img src="<?php echo $d["foto"]; ?>" class="card-img-top mt-4" alt="truk foto" style="max-width: 18rem;">
                                         <p class="fw-light fs-5 text-warning-emphasis mt-3" id="harga_truk">Harga Jual Perunit : Rp.<?php echo number_format($d['harga_jual'], 0, ',', '.'); ?></p>
                                     </div>
-                                <?php } ?>
+                                <?php }
+                    mysqli_close($koneksi);
+                    ?>
                                 <div class="d-grid">
                                     <p class="fw-light fs-5 text-warning-emphasis" name="total_harga">Total Bayar : <span id="totalBayar">Rp.0</span></p>
                                 </div>
