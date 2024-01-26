@@ -9,6 +9,10 @@ session_start();
   <!--script untuk mengatur dark/light mode-->
   <script src="../kelompok/js/color-modes.js"></script>
 
+  <!--link untuk icon-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-wTq1jOK1u2+38v8FjriZUblsh9UuGJlT1sF5t5l49SgAM2MWgY2P1yJ2PllIsf" crossorigin="anonymous">
+</head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -275,7 +279,7 @@ session_start();
   <!--navbar nya-->
 
   <header class="navbar border-bottom  border-dark-subtle sticky-top bg-dark-subtle flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 col-12 text-center me-0 px-3 fs-6 text-info-emphasis" href="http://localhost/projek-uas/proyek/landingpage.php">WARIF CORPORATION
+    <a class="navbar-brand border-end border-dark-subtle col-md-3 col-lg-2 col-12 text-center me-0 px-3 fs-6 text-info-emphasis" href="landingpage.php">WARIF CORPORATION
     </a>
     <?php
     include "koneksi.php";

@@ -47,6 +47,51 @@ include "warifheader.php"
   }
 
   ?>
+
+<!--mengambil parameter dari url jika berhasil jual-->
+<?php
+  // ...
+  // Set pesan default
+  $pesan = '';
+  
+  if (isset($_GET['status_jual'])) {
+    if ($_GET['status_jual'] === 'success_jual') {
+      echo '
+                <div class="toast-container position-fixed end-0 p-3">
+                  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                     
+                      <strong class="me-auto text-dark">WARIF CORPORATION</strong>
+                      <small class="text-dark">Baru Saja</small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                      Penjualan sukses silahkan cek transaksi untuk klaim pembayaran dari customer
+                    </div>
+                    <a href="transaksi.php"><button type="button" class="btn btn-success btn-sm mb-2 mx-2">Lihat Aktivitas</button></a>
+                  </div>
+                </div>';
+    } else if ($_GET['status'] === 'error') {
+      echo '<div class="toast-container position-fixed end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header bg-danger">
+                   
+                    <strong class="me-auto text-dark">WARIF CORPORATION</strong>
+                    <small class="text-dark">Baru Saja</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body text-danger ">
+                  gagal
+                   
+                  </div>
+                  
+                </div>
+              </div>';
+    }
+  }
+
+  ?>
+
   <div class="container mt-4 ">
     <h4 class=" mb-3">WARIF UNIT MANAJEMEN</h4>
     <div class="card mb-4">
@@ -66,10 +111,7 @@ include "warifheader.php"
         <a href="tambah_unit.php"><button type="button" class="btn btn-warning btn-sm mb-1" data-bs-toggle="modal" data-bs-target="#tambahUnitModal">
             Tambah Unit
           </button></a>
-        <div class="d-flex gap-2" role="search">
-          <input class="form-control me-1 " type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-sm btn-warning" type="submit">Search</button>
-        </div>
+       
       </div>
       <!-- Tabel CRUD -->
       <div class="card-body">
@@ -93,7 +135,6 @@ include "warifheader.php"
               include "koneksi.php";
 
               $query = mysqli_query($koneksi, " SELECT aset.id,truk.nama,pembelian.jumlah_beli,pembelian.tanggal_beli,truk.harga, aset.harga_jual,truk.vendor,truk.foto,truk.tahun_produksi,pembelian.id AS idpembelian FROM aset JOIN pembelian ON aset.pembelian = pembelian.id JOIN truk ON pembelian.truk = truk.id JOIN admin ON pembelian.owner = admin.id WHERE admin.id = '" . $_SESSION["idadmin"] . "';");
-
               while ($d = mysqli_fetch_array($query)) {
 
               ?>
@@ -125,14 +166,16 @@ include "warifheader.php"
                       </form>
         </div>
       <?php } else { ?>
-        <div class="d-flex flex-column">
-          <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='tableunit.php?idaset=<?php echo $d['id'] ?>'">Edit Harga</button>
-          <a href="jual_unit.php?idaset=<?php echo $d['id'] ?>&idpembelian=<?php echo $d['idpembelian'] ?>"><button type="button" class="btn btn-sm btn-info mt-2 ">Jual Unit</button></a>
+        <div class="d-inline-flex gap-2 ms-auto  ">
+          <a class="btn btn-sm btn-warning" onclick="window.location.href='tableunit.php?idaset=<?php echo $d['id'] ?>'" type="button">Edit Harga</a>
+          <a href="jual_unit.php?idaset=<?php echo $d['id'] ?>&idpembelian=<?php echo $d['idpembelian'] ?>"><button type="button" class="btn btn-sm btn-info">Jual Unit</button></a>
         </div>
       <?php } ?>
       </td>
       </tr>
-    <?php } ?>
+    <?php 
+  } 
+   ?>
     </tbody>
     </table>
       </div>
@@ -163,47 +206,8 @@ include "warifheader.php"
               <h5 class="card-title"><?php echo $e["nama"]; ?></h5>
               <p>Jumlah Beli <?php echo $e["jumlah_beli"]; ?></p>
               <p class="card-text">RP. <?php echo number_format($e['total_bayar'], 0, ',', '.'); ?></p>
-              <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Klaim Dan Bayar Unit</button>
-             
-              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Batal</button>
-            </div>
-          </div>
-
-          <!--modal konfirmasi klaim-->
-          <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header bg-info-subtle">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Konfirmasi Unit DI Terima</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  Saldo Anda Akan Di Tarik Sesuai Jumlah Total Bayar
-                </div>
-                <div class="modal-footer bg-info-subtle ">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                  <a href="klaimunit.php?buyid=<?php echo $e["id"]; ?>&trukid=<?php echo $e["idtruk"]; ?>" class="btn btn-outline-info">Klaim Unit</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!--modal batal klaim-->
-          <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header bg-danger-subtle">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Batal Klaim Unit</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  Pembelian Akan Di Batalkan 
-                </div>
-                <div class="modal-footer bg-danger-subtle ">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <a href="batalklaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-outline-danger">Batal Klaim</a>
-                </div>
-              </div>
+              <a href="klaimunit.php?buyid=<?php echo $e["id"]; ?>&trukid=<?php echo $e["idtruk"]; ?>" class="btn btn-outline-info">Klaim Unit</a>
+              <a href="batalklaimunit.php?buyid=<?php echo $e["id"]; ?>" class="btn btn-outline-danger">Batal Klaim</a>
             </div>
           </div>
       <?php

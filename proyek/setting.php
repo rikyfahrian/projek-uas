@@ -4,9 +4,9 @@ include "warifheader.php";
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="container mt-5 mb-5">
+    <div class="container mt-4 mb-5">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col">
                 <div class="card ">
                     <div class="card-header bg-warning text-dark fw-semibold fs-4">
                         Baca Dahulu
@@ -45,41 +45,7 @@ include "warifheader.php";
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 mt-4 mt-md-0">
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="">
-                            
-                            <img src="../image/alif.jpg" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title text-success">Informasi Pengguna</h5>
-                                <?php
-                               
-                                include "koneksi.php";
-
-                                $query = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin");
-                                $cek = mysqli_num_rows($query);
-
-                                   
-                                  
-                                                              
-                                while ($_SESSION= mysqli_fetch_array($query)) {
-                                ?>
-                                    <p class="card-text">Username: <?php echo $_SESSION['username']; ?></p>
-                                    <p class="card-text">Email: <?php echo $_SESSION['email']; ?></p>
-                                    
-                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                <?php
-                                }  
-                                
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
     </div>

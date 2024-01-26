@@ -7,15 +7,14 @@ $idpembelian = $_GET['idpembelian'];
 
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   
         $nama_customer = $_POST['nama_customer'];
         $alamat = $_POST['alamat'];
         $no_hp = $_POST['no_hp'];
         $bank = $_POST['bank'];
         $no_rek = $_POST['no_rek'];
         $jumlah_beli = $_POST['jumlah_beli'];
-        $status_bayar = 0; 
-        $tanggal_transaksi = date('Y-m-d'); 
+        $status_bayar = 0;
+        $tanggal_transaksi = date('Y-m-d');
 
         // Hitung total harga
         $query = mysqli_query($koneksi, "SELECT aset.harga_jual,truk.id 
@@ -23,11 +22,11 @@ try {
                                           join pembelian on aset.pembelian = pembelian.id
                                           join truk on pembelian.truk = truk.id
                                           WHERE aset.id = '$idaset';");
-                $row = mysqli_fetch_array($query);
-                $harga_jual = $row['harga_jual'];
-                $idtruk = $row['id'];
-                $total_harga = $harga_jual * $jumlah_beli;
-                echo $idtruk;
+        $row = mysqli_fetch_array($query);
+        $harga_jual = $row['harga_jual'];
+        $idtruk = $row['id'];
+        $total_harga = $harga_jual * $jumlah_beli;
+        echo $idtruk;
         // Mulai transaksi
         mysqli_begin_transaction($koneksi);
 
@@ -51,17 +50,23 @@ try {
             $isZero = mysqli_fetch_array($cek)['jumlah_beli'];
 
             if ($isZero == 0) {
-                $update_query = "DELETE FROM aset WHERE id = '$idaset'" ;
+                $update_query = "DELETE FROM aset WHERE id = '$idaset'";
                 if (!mysqli_query($koneksi, $update_query)) {
                     throw new Exception("Error updating data in the pembelian table: " . mysqli_error($koneksi));
                 }
             }
 
+            //Hitung total units Terjual Untuk Di Tampilkan Pada Laporan
+            $totaljual = isset($_SESSION['total_jual']) ? $_SESSION['total_jual'] : 0;
+            $totaljual += $jumlah_beli;
+            $_SESSION['total_jual'] = $totaljual;
+
 
             // Commit transaksi jika kedua query berhasil
             mysqli_commit($koneksi);
-        
-            header("Location: tableunit.php");
+
+            header("Location: tableunit.php?status_jual=success_jual");
+
             exit();
         } catch (Exception $e) {
             // Rollback transaksi jika salah satu query gagal
@@ -76,4 +81,3 @@ try {
     // Tutup koneksi
     mysqli_close($koneksi);
 }
-?>
