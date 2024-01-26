@@ -12,7 +12,7 @@ include "warifheader.php";
                     <div class="card-header fs-5 fw-fw-semibold text-primary-emphasis ">
                         Isi Data Customer
                     </div>
-                    <form method="post" action="jual_aksi.php?idaset=<?php echo $_GET['idaset']; ?>">
+                    <form method="post" action="jual_aksi.php?idaset=<?php echo $_GET['idaset']; ?>&idpembelian=<?php echo $_GET['idpembelian'] ?>">
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col">

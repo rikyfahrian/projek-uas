@@ -11,13 +11,19 @@ include "warifheader.php";
       <div class="col-sm-8 col-md-6">
         <div class="card mb-3 bg-info-subtle " style="max-width: 740px;">
           <div class="row g-0">
-            <div class="col-md-4">
-              <img src="../image/alif.jpg" class="img-fluid rounded-start" alt="..." >
-            </div>
+            <?php 
+              include "koneksi.php";
+              $idAdmin = $_SESSION["idadmin"];
+
+              $query = mysqli_query($koneksi,"SELECT foto,nama FROM admin WHERE id = '$idAdmin'");
+              while ($e = mysqli_fetch_array($query)) {
+              
+              ?>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">(Nama Pengguna)</h5>
-                <p class="card-text">Selamat datang [nama pengguna],ini adalah halaman dashboard, dapatkan informasi dari aktivitas anda di halaman ini.</p>
+                <h5 class="card-title">Halo <?php echo $e["nama"]?></h5>
+                <p class="card-text">Selamat datang ,ini adalah halaman dashboard, dapatkan informasi dari aktivitas anda di halaman ini, untuk info lebih lanjut baca dokumentasi aplikasi.</p>
+             <?php } ?>
               </div>
             </div>
           </div>
@@ -30,10 +36,10 @@ include "warifheader.php";
           <div class="row g-0">
             <div class="col-md-8">
               <div class="card-body">
-                <a class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="atursaldo.php">
+                <a class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="saldo.php">
                   <h5 class="card-title">Informasi Saldo</h5>
                 </a>
-                <p class="card-text mb-3">Kini anda juga bisa melakukan top up saldo dengan minimal deposit sebesar Rp.10.000.000, Dan beli unit lebih banyak pada aplikasi kami</p>
+                <p class="card-text ">Kini anda juga bisa melakukan top up saldo dengan minimal deposit sebesar Rp.10.000.000, Dan beli unit lebih banyak pada aplikasi kami</p>
               </div>
             </div>
           </div>
@@ -52,20 +58,20 @@ include "warifheader.php";
             </div>
             <div class="card-body">
               <h5 class="card-title">Total Penjualan</h5>
-              <p class="card-text">Munculkan Total Penjualan di sini jika belum ada maka 0.</p>
-              <a href="#" class="btn  btn-sm btn-warning">Lihat Detail</a>
+              <p class="card-text">Lihat Data Total Penjualan</p>
+              <a href="laporan.php" class="btn  btn-sm btn-warning">Lihat Detail</a>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
         <div class="card">
             <div class="card-header bg-info-subtle  ">
-              Konsumen
+              Keuangan
             </div>
             <div class="card-body">
-              <h5 class="card-title">Data Konsumen</h5>
-              <p class="card-text">Munculkan Jumlah Konsumen di sini jika belum ada maka [0].</p>
-              <a href="#" class="btn  btn-sm btn-warning">Lihat Detail</a>
+              <h5 class="card-title">Profit</h5>
+              <p class="card-text">Informasi Profit Anda Dalam Penggunaan Aplikasi.</p>
+              <a href="laporan.php" class="btn  btn-sm btn-warning">Lihat Detail</a>
             </div>
           </div>
         </div>
@@ -74,10 +80,17 @@ include "warifheader.php";
 
     <!-- chart bar diagam-->
     <div class="container mt-2 mb-4">
-      <div class="card chart-container bg-info-subtle ">
-        <canvas id="chart"></canvas>
+      <div class="row">
+      <div class="col py-1">
+        <div class="card bg-info-subtle ">
+          <div class="card-body">
+            <canvas id="chBar"></canvas>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
+  </div>
 
     <div class="container text-center">
       <h4 class="fw-semibold text-success-emphasis text-start mb-4 sticky-md-top">Infromasi Unit</h4>
@@ -144,7 +157,7 @@ include "warifheader.php";
             <img src="../image/riky.png" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Mohamad Riky Fahrian</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              
             </div>
             <div class="card-footer bg-info-subtle">
               <small class="text-body-secondary">WARIF CORPORATION</small>
@@ -156,7 +169,7 @@ include "warifheader.php";
             <img src="../image/alif.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Alif Haikal</h5>
-              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+              
             </div>
             <div class="card-footer bg-info-subtle">
               <small class="text-body-secondary">WARIF CORPORATION</small>
@@ -168,7 +181,7 @@ include "warifheader.php";
             <img src="../image/widi.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Widi Indra Cahyana</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+             
             </div>
             <div class="card-footer bg-info-subtle">
               <small class="text-body-secondary">WARIF CORPORATION</small>
@@ -182,7 +195,7 @@ include "warifheader.php";
             <img src="../image/iky.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Muhammad Risky</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+              
             </div>
             <div class="card-footer bg-info-subtle">
               <small class="text-body-secondary">WARIF CORPORATION</small>
@@ -194,7 +207,7 @@ include "warifheader.php";
             <img src="../image/ferdian.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Ferdian</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+             
             </div>
             <div class="card-footer bg-info-subtle">
               <small class="text-body-secondary">WARIF CORPORATION</small>
@@ -205,12 +218,90 @@ include "warifheader.php";
 
     </div>
 </main>
-<!--cdn untuk chart-->
-<script src="@@path/vendor/chartist/dist/chartist.min.js"></script>
-<script src="@@path/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<!--mengambil js untuk chart-->
-<script src="../js/chart.js"></script>
-<script src="../kelompok/js/dashboard.js"></script>
+<!--script khusus untuk chart-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+<script>
+ 
+
+// warna chart
+var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
+
+/* line chart */
+var chLine = document.getElementById("chLine");
+var chartData = {
+  labels: ["S", "M", "T", "W", "T", "F", "S"],
+  datasets: [{
+    data: [589, 445, 483, 503, 689, 692, 634],
+    backgroundColor: 'transparent',
+    borderColor: colors[0],
+    borderWidth: 4,
+    pointBackgroundColor: colors[0]
+  }
+// {
+//     data: [639, 465, 493, 478, 589, 632, 674],
+//     backgroundColor: colors[3],
+//     borderColor: colors[1],
+//     borderWidth: 4,
+//     pointBackgroundColor: colors[1]
+//   }
+  ]
+};
+if (chLine) {
+  new Chart(chLine, {
+  type: 'line',
+  data: chartData,
+  options: {
+    scales: {
+      xAxes: [{
+        ticks: {
+          beginAtZero: false
+        }
+      }]
+    },
+    legend: {
+      display: false
+    },
+    responsive: true
+  }
+  });
+}
+
+
+/*bar chart */
+var chBar = document.getElementById("chBar");
+if (chBar) {
+  new Chart(chBar, {
+  type: 'bar',
+  data: {
+    labels: ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"],
+    datasets: [{
+      data: [589, 445, 483, 503, 689, 692, 634],
+      backgroundColor: colors[0]
+    },
+    {
+      data: [639, 465, 493, 478, 589, 632, 674],
+      backgroundColor: colors[1]
+    }]
+  },
+  options: {
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        barPercentage: 0.4,
+        categoryPercentage: 0.5
+      }]
+    }
+  }
+  });
+}
+
+
+
+
+</script>
+
 
 
   
