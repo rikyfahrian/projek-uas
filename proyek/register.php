@@ -211,24 +211,7 @@
                     </div>
 
 
-                    <!-- Modal -->
-                    <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content  ">
-                                <div class="modal-header bg-info-subtle">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Konfirmasi Data Anda</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body fs-6 fw-semibold ">
-                                    Apakah Anda Sudah Yakin Dengan Data Yang Anda Inputkan
-                                </div>
-                                <div class="modal-footer bg-info-subtle">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Urungkan</button>
-                                    <input type="submit" class="btn btn-info" value="Lanjutkan">
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+       
                     
                 </div>
             </div>

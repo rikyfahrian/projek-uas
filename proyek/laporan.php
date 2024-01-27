@@ -104,7 +104,7 @@ include "warifheader.php";
                         $query = mysqli_query($koneksi,"SELECT SUM(jumlah_beli) as total FROM penjualan WHERE owner = '$idAdmin'  AND status_bayar = true");
                         $total = mysqli_fetch_assoc($query)["total"];
                         echo "<h1 class='display-6 fw-bold text-info-emphasis '>$total Unit</h1>";
-                    mysqli_close($koneksi);
+                         mysqli_close($koneksi);
 
                         ?>
                     </div>
